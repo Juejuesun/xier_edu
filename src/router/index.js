@@ -1,22 +1,75 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from '../views/Home.vue'
+
+import Login from '../views/Login'
+import StuHome from '../views/StuHome'
+import ClassList from '../components/stuhome/ClassList'
+import SaftyPg from '../components/stuhome/SaftyPg'
+import StuClass from '../views/StuClass'
+import Announcement from '../components/stuhome/menu/Announcement'
+import Video from '../components/stuhome/menu/Video'
+import Homework from '../components/stuhome/menu/Homework'
+import Disscuss from '../components/stuhome/menu/Disscuss'
 
 Vue.use(VueRouter)
 
 const routes = [
   {
-    path: '/',
-    name: 'Home',
-    component: Home
+    path: '',
+    redirect: '/login'
   },
   {
-    path: '/about',
-    name: 'About',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
+    path: '/login',
+    name: 'Login',
+    component: Login
+  },
+  {
+    path: '/stuhome',
+    name: 'StuHome',
+    component: StuHome,
+    children: [
+      {
+        path: '/stuhome',
+        redirect: '/stuhome/classlist'
+      },
+      {
+        path: '/stuhome/classlist',
+        name: 'ClassList',
+        component: ClassList
+      },
+      {
+        path: '/stuhome/saftypg',
+        name: 'SaftyPg',
+        component: SaftyPg
+      }
+    ]
+  },
+  {
+    path: '/stuclass',
+    name: 'StuClass',
+    component: StuClass,
+    children: [
+      {
+        path: '/stuclass/announcement',
+        name: 'Announcement',
+        component: Announcement
+      },
+      {
+        path: '/stuclass/video',
+        name: 'Video',
+        component: Video
+      },
+      {
+        path: '/stuclass/homework',
+        name: 'Homework',
+        component: Homework
+      },
+      {
+        path: '/stuclass/disscuss',
+        name: 'Disscuss',
+        component: Disscuss
+      }
+    ]
   }
 ]
 

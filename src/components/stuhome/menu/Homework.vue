@@ -1,15 +1,15 @@
 <template>
   <div>
-    <router-view/>
+    作业
   </div>
 </template>
 
 <script>
 export default {
-  
+
 }
 </script>
 
-<style>
+<style scoped>
 
 </style>
