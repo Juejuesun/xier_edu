@@ -7,8 +7,8 @@
         <p>主讲教师：张东升</p>
         <p>班级：一年2班</p>
         <div>
-          <el-button size="mini" @click="pgch">进入课程</el-button>
-          <el-button size="mini">查看作业</el-button>
+          <el-button size="mini" @click="pgch('CLS')">进入课程</el-button>
+          <el-button size="mini" @click="pgch('HWK')">查看作业</el-button>
         </div>
       </el-card>
     </div>
@@ -18,8 +18,12 @@
 <script>
 export default {
   methods: {
-    pgch() {
-      this.$router.push({path: '/stuclass'})
+    pgch(typ) {
+      if(typ==='CLS') {
+        this.$router.push({path: '/stuclass/announcement'})
+      }else {
+        this.$router.push({path: '/stuclass/homework'})
+      }
     }
   }
 }

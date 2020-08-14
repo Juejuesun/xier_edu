@@ -5,7 +5,7 @@
         <i class="el-icon-arrow-left"></i> 返回
       </div>
       <div class="asibtn">
-        <div class="userh" @click="pgchange('home')">
+        <div class="userh" @click="pgchange">
           <i class="el-icon-user"></i>
         </div>
         <el-button size="small" type="info" round>退出</el-button>
@@ -50,6 +50,9 @@ export default {
     backbtn() {
       this.$router.push({ path: "/stuhome/classlist" });
     },
+    pgchange() {
+      this.$router.push({path: '/stuhome/classlist'})
+    }
   },
 };
 </script>
@@ -169,6 +172,12 @@ a:active {
   }
 }
 .router-link-exact-active {
+  color: #fff;
+  .bx {
+    background: rgb(136, 214, 248);
+  }
+}
+.router-link-active {
   color: #fff;
   .bx {
     background: rgb(136, 214, 248);

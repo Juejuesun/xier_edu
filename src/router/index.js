@@ -11,6 +11,9 @@ import Video from '../components/stuhome/menu/Video'
 import Homework from '../components/stuhome/menu/Homework'
 import Disscuss from '../components/stuhome/menu/Disscuss'
 
+import Comments from '../components/stuhome/comment/Comments'
+import Push from '../components/stuhome/comment/Push'
+
 Vue.use(VueRouter)
 
 const routes = [
@@ -67,7 +70,20 @@ const routes = [
       {
         path: '/stuclass/disscuss',
         name: 'Disscuss',
-        component: Disscuss
+        component: Disscuss,
+        // children: [
+          
+        // ]
+      },
+      {
+        path: '/stuclass/disscuss/comments',
+        name: 'Comments',
+        component: Comments,
+      },
+      {
+        path: '/stuclass/disscuss/push',
+        name: 'Push',
+        component: Push,
       }
     ]
   }
