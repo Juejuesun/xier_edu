@@ -6,9 +6,9 @@
 
 <script>
 // import HomeworkSheetList from "./HomeworkSheetList";
-import myMusicSheetList from "./myMusicSheetList";
+import HomeworkSheetList from "./HomeworkSheetList";
 export default {
-  components: { "sheet-list": myMusicSheetList },
+  components: { "sheet-list": HomeworkSheetList },
   data() {
     return {
       sheetList: [

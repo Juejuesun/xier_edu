@@ -13,6 +13,9 @@ import Disscuss from '../components/stuhome/menu/Disscuss'
 
 import Comments from '../components/stuhome/comment/Comments'
 import Push from '../components/stuhome/comment/Push'
+import HomeworkDetail from '../components/stuhome/homework/HomeworkDetail'
+
+import VideoPlayer from '../components/stuhome/player/VideoPlayer'
 
 Vue.use(VueRouter)
 
@@ -62,10 +65,20 @@ const routes = [
         name: 'Video',
         component: Video
       },
+      // {
+      //   path: '/stuclass/video/player',
+      //   name: 'VideoPlayer',
+      //   component: VideoPlayer
+      // },
       {
         path: '/stuclass/homework',
         name: 'Homework',
         component: Homework
+      },
+      {
+        path: '/stuclass/homework/detail',
+        name: 'HomeworkDetail',
+        component: HomeworkDetail
       },
       {
         path: '/stuclass/disscuss',
@@ -86,7 +99,12 @@ const routes = [
         component: Push,
       }
     ]
-  }
+  },
+  {
+    path: '/player',
+    name: 'VideoPlayer',
+    component: VideoPlayer
+  },
 ]
 
 const router = new VueRouter({

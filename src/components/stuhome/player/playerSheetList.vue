@@ -2,11 +2,7 @@
   <div class="sheet-list">
     <div class="sheet-header" @click="toggleSheet">
       <i class="el-icon-arrow-right" ref="toggleicon"></i>
-      <span class="sheet-header-span">
-        {{data_item.name}}
-        <span>({{data_item.num}})</span>
-      </span>
-      <!-- <i class="sheet-header-i el-icon-setting" @click.stop="showSheetMenu(data_item.name)"></i> -->
+      <span>{{data_item.name}}</span>
     </div>
 
     <div
@@ -14,6 +10,7 @@
       class="sheet-content"
       v-for="(i, index) in data_item.details"
       :key="index"
+      @click="showSheetMenu(i)"
     >
       <!-- <div class="sheet-content-image">
         <img :src="i.details_image" width="50" height="50" style="padding: 5px;overflow: hidden" />
@@ -26,7 +23,7 @@
         <p style>{{i.details_name}}</p>
         <!-- <p style="margin-top: 10px;font-size: 14px;color: #666">{{i.details_num}}首歌曲</p> -->
       </div>
-      <i class="el-icon-more sheet-content-i" @click.stop="showSheetMenu()"></i>
+      <!-- <i class="el-icon-more sheet-content-i" @click="showSheetMenu()"></i> -->
     </div>
   </div>
 </template>
@@ -54,8 +51,15 @@ export default {
         : "rotate(0)";
       this.showSheets = !this.showSheets;
     },
-    showSheetMenu() {
-      alert(1111);
+    showSheetMenu(row) {
+      // alert(1111);
+      console.log('hahah')
+      //  this.$router.push({
+      //   name: 'VideoPlayer',
+      //   query: {
+      //     row: row
+      //   }
+      // })
     },
   },
   created() {
@@ -66,22 +70,27 @@ export default {
 
 <style scoped>
 .sheet-list {
-  clear: both;
+  clear: both; 
+  /* padding: 15px; */
 }
 .sheet-header {
-  height: 50px;
-  background: rgb(195,234,252);
-  position: relative;
+  width: 100%;
+  height: 40px;
+  font-size: 18px;
+  /* background: #409EFF; */
+  /* position: relative; */
 
-  display: flex;
-  align-items: center;
-  border-bottom: 1px solid #e4e7ed;
+  /* display: flex; */
+  /* align-items: center; */
+  /* border-bottom: 1px solid #e4e7ed; */
 }
 .sheet-header i:nth-child(1) {
-  line-height: 30px;
-  position: absolute;
-  left: 10px;
-  color: #666;
+  /* line-height: 30px; */
+  /* position: absolute; */
+  /* left: 10px; */
+  /* color: #666; */
+  font-weight: 700;
+  margin: 10px;
   transition: all 0.5s;
 }
 .sheet-header-i {
@@ -97,7 +106,7 @@ export default {
 }
 .sheet-content {
   position: relative;
-  width: 100%;
+  width: 80%;
   display: flex;
   cursor: pointer;
 }
@@ -130,8 +139,8 @@ export default {
   font-size: 16px;
   width: 70%;
   color: #666;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  overflow: hidden;
+  text-overflow: ellipsis; /*隐藏超出的部分*/
+  white-space: nowrap;  /*不换行*/
+  overflow: hidden; /*省略超出行的部分*/
 }
 </style>

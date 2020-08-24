@@ -5,9 +5,9 @@
 </template>
 
 <script>
-import myMusicSheetList from "./myMusicSheetList";
+import videosSheetList from "./videosSheetList";
 export default {
-  components: { "sheet-list": myMusicSheetList },
+  components: { "sheet-list": videosSheetList },
   data() {
     return {
       sheetList: [

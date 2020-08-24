@@ -26,7 +26,7 @@
         <p style>{{i.details_name}}</p>
         <!-- <p style="margin-top: 10px;font-size: 14px;color: #666">{{i.details_num}}首歌曲</p> -->
       </div>
-      <i class="el-icon-more sheet-content-i" @click.stop="showSheetMenu(i)"></i>
+      <i class="el-icon-more sheet-content-i" @click="showSheetMenu(i)"></i>
     </div>
   </div>
 </template>
@@ -55,10 +55,11 @@ export default {
       this.showSheets = !this.showSheets;
     },
     showSheetMenu(row) {
+      // alert(1111);
       this.$router.push({
-        name: 'HomeworkDetail',
+        name: 'VideoPlayer',
         query: {
-          row: row.details_name
+          row: JSON.stringify(row)
         }
       })
     },
