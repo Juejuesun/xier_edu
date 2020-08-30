@@ -1,10 +1,10 @@
 <template>
   <div>
     <div class="list" >
-      <el-card class="box-card" shadow="hover" v-for="(item, index) in classList" :key="index">
+      <el-card class="box-card" shadow="hover" v-for="o in 7" :key="o">
         <el-image style="width: 100%; height: 150px" src="https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg" fit="fit"></el-image>
-        <h3>{{item.subName}}</h3>
-        <p>主讲教师：<span>{{item.teacher}}</span></p>
+        <h3>语文</h3>
+        <p>主讲教师：张东升</p>
         <p>班级：一年2班</p>
         <div>
           <el-button size="mini" @click="pgch('CLS')">进入课程</el-button>
@@ -16,18 +16,13 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
-
 export default {
-  computed: {
-    ...mapState(['classList'])
-  },
   methods: {
     pgch(typ) {
       if(typ==='CLS') {
-        this.$router.push({path: '/stuclass/announcement'})
+        this.$router.push({path: '/teaclass/announcement'})
       }else {
-        this.$router.push({path: '/stuclass/homework'})
+        this.$router.push({path: '/teaclass/homework'})
       }
     }
   }

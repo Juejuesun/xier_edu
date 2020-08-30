@@ -19,6 +19,7 @@
     "vue-quill-editor": "^3.0.6",
     "vue-router": "^3.2.0",
     "vuex": "^3.4.0",
+    "xlsx": "^0.16.6",
     "zx-player": "^0.9.6"
   },
   "devDependencies": {

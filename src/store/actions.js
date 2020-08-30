@@ -1,10 +1,10 @@
-import { SEARCH_FILE, GET_LIST } from './mutation-types'
+import { PUSH_ACCOUNT, GET_CLASS_LIST } from './mutation-types'
 
 export default{
-  searchFile({commit}, doc) {
-    commit(SEARCH_FILE, {doc})
+  pushAccount({commit}, doc) {
+    commit(PUSH_ACCOUNT, doc)
   },
-  getList({commit}, doc) {
-    commit(GET_LIST, {doc})
+  getClassList({commit}) {
+    commit(GET_CLASS_LIST)
   }
 }

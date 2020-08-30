@@ -35,7 +35,12 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
+
 export default {
+  computed: {
+    ...mapState(['accountInfo'])
+  },
   data() {
     var checkPre = (rule, value, callback) => {
       if (!value) {
@@ -65,14 +70,14 @@ export default {
       }
     }
     return {
-      fit: "cover",
-      dialogTableVisible: false,
-      dialogVisible: false,
-      previewImg: "",
-      oldImg: "",
+      // fit: "cover",
+      // dialogTableVisible: false,
+      // dialogVisible: false,
+      // previewImg: "",
+      // oldImg: "",
 
       // 防止重复提交
-      loading: false,
+      // loading: false,
 
       ruleForm: {
         pass: "",
@@ -90,22 +95,28 @@ export default {
     submitForm(formName) {
         this.$refs[formName].validate(async (valid) => {
           if (valid) {
+            // let asc = {
+            //     id: this.userInfo.userId,
+            //     prePassword: this.ruleForm.prePass,
+            //     newPassword: this.ruleForm.checkPass,
+            //     identity: this.userInfo.userRoot
+            // }
             let asc = {
-                id: this.userInfo.userId,
-                prePassword: this.ruleForm.prePass,
-                newPassword: this.ruleForm.checkPass,
-                identity: this.userInfo.userRoot
+                user_id: this.accountInfo.user_id,
+                old_password: this.ruleForm.prePass,
+                new_password1: this.ruleForm.pass,
+                new_password2: this.ruleForm.checkPass
             }
-            const {data: res} = await this.$http.post('/editPassword', asc)
+            const {data: res} = await this.$http.post('/update_password', asc)
             // console.log(res)
-            if(res.status == 'success') {
+            if(res.status == 200) {
                 this.$message({
                     message: '修改成功！',
                     type: 'success'
                 })
             }else {
                 this.$message({
-                    message: '修改失败！',
+                    message: '修改失败！'+ res.message,
                     type: 'error'
                 })
             }

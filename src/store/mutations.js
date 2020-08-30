@@ -1,19 +1,23 @@
-import { SEARCH_FILE, GET_LIST } from './mutation-types'
+import { PUSH_ACCOUNT, GET_CLASS_LIST } from './mutation-types'
 import axios from 'axios'
 
 export default{
-  async [SEARCH_FILE] (state, {doc}) {
-    if(!doc) {
-      console.log('搜索字段空')
-      return;
-    }
-    const {data: res} = await axios.post('/searchs', {doc :doc})
-    console.log(res)
-    state.searchLis = JSON.parse(JSON.stringify(res.searchls))
+  [PUSH_ACCOUNT] (state, doc) {
+    console.log(doc)
+    // state.accountInfo = JSON.parse(JSON.stringify(doc))
+    state.accountInfo.avadar = 'data:image/jpg;base64,'+ doc.avadar
+    state.accountInfo.name = doc.name
+    state.accountInfo.account = doc.userid
+    state.accountInfo.classNum = doc.classNum
+    state.accountInfo.date = doc.date
+    state.accountInfo.user_id = doc.user_id
+    window.sessionStorage.setItem('token', doc.token)
   },
-  async [GET_LIST] (state, {doc}) {
-    const {data: res} = await axios.post('/mus', doc)
-    state.realList = JSON.parse(JSON.stringify(res.realList))
-    state.FileList = JSON.parse(JSON.stringify(res.FileList))
+  async [GET_CLASS_LIST] (state) {
+    const {data: res} = await axios.post('/std/get_classes', {user_id: state.accountInfo.user_id})
+    console.log(res)
+    if(res.status == 200) {
+      state.classList = JSON.parse(JSON.stringify(res.data))
+    }
   }
 }

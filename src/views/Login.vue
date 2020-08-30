@@ -7,8 +7,8 @@
       </div>
       <div class="login_box">
         <div class="angle">
-          <div :class="{angbox: true ,angboxact: ruleForm.identity==1}" @click="handleClick(1)">我是学生</div>
-          <div :class="{angbox: true ,angboxact: ruleForm.identity==2}" @click="handleClick(2)">我是教师</div>
+          <div :class="{angbox: true ,angboxact: ruleForm.is_teacher==false}" @click="handleClick(false)">我是学生</div>
+          <div :class="{angbox: true ,angboxact: ruleForm.is_teacher==true}" @click="handleClick(true)">我是教师</div>
         </div>
         <el-form
           hide-required-asterisk
@@ -18,8 +18,8 @@
           label-width="60px"
           class="demo-ruleForm"
         >
-          <el-form-item label="账号:" prop="id" class="name">
-            <el-input style="width: 280px" v-model="ruleForm.id" placeholder="请输入账号"></el-input>
+          <el-form-item label="账号:" prop="account" class="name">
+            <el-input style="width: 280px" v-model="ruleForm.account" placeholder="请输入账号"></el-input>
           </el-form-item>
           <el-form-item label="密码:" prop="password">
             <el-input
@@ -46,6 +46,7 @@
               @click="submitForm"
             >登陆</el-button>
           </div>
+          <div class="statbox">{{message}}</div>
         </div>
       </div>
     </div>
@@ -57,38 +58,46 @@ export default {
   data() {
     return {
       ruleForm: {
-        id: "12345601",
-        password: "11111111",
-        identity: 1,
+        account: "Mary",
+        password: "123456",
+        is_teacher: false,
         checked: false
       },
       rules: {
-        id: [{ required: true, message: "请输入账号", trigger: "blur" }],
+        account: [{ required: true, message: "请输入账号", trigger: "blur" }],
         password: [
           { required: true, message: "请输入密码", trigger: "blur" },
-          { min: 8, max: 16, message: "长度在 8 到 16 个字符", trigger: "blur" }
+          { min: 6, max: 16, message: "长度在 8 到 16 个字符", trigger: "blur" }
         ]
-      }
-    };
+      },
+      message: ''
+    }
   },
   methods: {
     handleClick(ang) {
-      this.ruleForm.identity = ang;
-      if (ang === 1) {
-        this.ruleForm.id = "123402311";
+      this.ruleForm.is_teacher = ang;
+      if (ang === false) {
+        this.ruleForm.account = "Mary";
       } else {
-        this.ruleForm.id = "159001";
+        this.ruleForm.account = "Lisa";
       }
     },
     submitForm() {
       // let that = this
       this.$refs.ruleForm.validate(async valid => {
         if (valid) {
-          console.log("登陆");
-          if(this.ruleForm.identity=='1') {
-            this.$router.push({path: '/stuhome'})
-          }else {
-            this.$router.push({path: '/teahome'})
+          console.log("登陆")
+          const {data: res} = await this.$http.post('/auth/login', this.ruleForm)
+          console.log(res)
+          if(res.status == 200) {
+            this.$store.dispatch('pushAccount', res.data)
+            if(this.ruleForm.is_teacher === false) {            
+              this.$router.push({path: '/stuhome'})
+            }else {
+              this.$router.push({path: '/teahome'})
+            }
+          } else {
+            this.message = res.message
           }
         }
       });
@@ -137,6 +146,10 @@ export default {
 .btnbox {
   text-align: center;
   margin: 30px;
+}
+.statbox {
+  text-align: center;
+  color: red;
 }
 .inlinebox {
   display: flex;
