@@ -30,6 +30,9 @@ export default {
         this.$router.push({path: '/stuclass/homework'})
       }
     }
+  },
+  created() {
+    this.$store.dispatch('getClassList')
   }
 }
 </script>

@@ -25,7 +25,7 @@ import { mapState } from 'vuex'
 
 export default {
   computed: {
-    ...mapState(['accountInfo'])
+    ...mapState([ 'accountInfo', 'tempInfo' ])
   },
   data() {
     return {
@@ -44,7 +44,7 @@ export default {
       if(this.comForm.title && this.comForm.content) {
         let asc = {
           user_id: this.accountInfo.user_id,
-          class_id: 4, //模拟数据
+          class_id: this.tempInfo.class_id,
           title: this.comForm.title,
           content: this.comForm.content
         }

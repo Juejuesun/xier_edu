@@ -5,19 +5,19 @@
       <el-button type="primary" round @click="pushcomm">发布讨论</el-button>
     </div>
     <el-divider></el-divider>
-    <div v-for="(item, index) in commenList" :key="index">
+    <div v-for="(item, index) in talkingList" :key="index">
       <el-card class="box-card" shadow="hover">
         <div class="header_title">{{item.title}}</div>
         <div>{{item.content}}</div>
         <div class="card_btm">
           <div class="btm_chr">
-            <div class="chr_font">{{item.acture}}</div>
+            <div class="chr_font">{{item.userName}}</div>
             <div class="chr_font"><span>{{item.date}}</span>发表</div>
           </div>
           <div class="btm_chr">
-            <div class="chr_font">浏览<span>{{item.watch}}</span></div>
-            <div class="chr_font">回复<span>{{item.commit}}</span></div>
-            <div class="btncom" @click="getcomm"><i class="el-icon-chat-dot-square"></i></div>
+            <!-- <div class="chr_font">浏览<span>{{item.watch}}</span></div> -->
+            <div class="chr_font">回复<span>{{item.replyNum}}</span></div>
+            <div class="btncom" @click="getcomm(item)"><i class="el-icon-chat-dot-square"></i></div>
           </div>
         </div>
       </el-card>
@@ -28,6 +28,8 @@
 </template>
 
 <script>
+import { mapState} from 'vuex'
+
 export default {
   data() {
     return {
@@ -67,13 +69,21 @@ export default {
       ]
     }
   },
+  computed: {
+    ...mapState([ 'talkingList', 'tempInfo' ])
+  },
   methods: {
-    getcomm() {
+    getcomm(row) {
+      this.tempInfo.oneTalking = JSON.parse(JSON.stringify(row))
+      console.log(this.tempInfo.oneTalking)
       this.$router.push({path: '/teaclass/disscuss/comments'})
     },
     pushcomm() {
       this.$router.push({path: '/teaclass/disscuss/push'})
     }
+  },
+  created() {
+    this.$store.dispatch('getTalkings')
   }
 }
 </script>
@@ -108,7 +118,7 @@ export default {
 }
 .header_title {
   font-size: 25px;
-  letter-spacing: 10px;
+  letter-spacing: 5px;
   margin-bottom: 10px;
 }
 .btncom {

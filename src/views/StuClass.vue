@@ -54,7 +54,7 @@ export default {
       this.$router.push({path: '/stuhome/classlist'})
     }
   },
-};
+}
 </script>
 
 <style scoped>

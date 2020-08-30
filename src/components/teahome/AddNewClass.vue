@@ -122,9 +122,18 @@ export default {
         }
     },
     computed: {
-        // ...mapState([ 'userInfo', 'memberList', 'teaClassInfo', 'tempMemberList' ])
+        ...mapState([ 'accountInfo' ])
     },
     methods: {
+        async setNewclass() {
+            let asc = {
+                user_id: this.accountInfo.user_id,
+                class_name: this.setClassName,
+                class_info: ''
+            }
+            const {data: res} = await this.$http.post('/manage/apply_class', asc)
+            console.log(res)
+        },
         leftback() {
             this.$router.go(-1)
             this.setClassName = ''
@@ -206,15 +215,21 @@ export default {
         },
         async subCreat() {//添加请求
             if(this.setClassName) {
+                // let asc = {
+                //     teacherIdOfSubject: this.userInfo.userId,
+                //     theSubject: this.setClassName
+                // }
+                // const {data: res} = await this.$http.post('/teacher/creatClass', asc)
                 let asc = {
-                    teacherIdOfSubject: this.userInfo.userId,
-                    theSubject: this.setClassName
+                    user_id: this.accountInfo.user_id,
+                    class_name: this.setClassName,
+                    class_info: ''
                 }
-                const {data: res} = await this.$http.post('/teacher/creatClass', asc)
+                const {data: res} = await this.$http.post('/manage/apply_class', asc)
                 console.log(res)
-                if(res.status=='success') {
+                if(res.status==200) {
                     const s = 1
-                    await this.$store.dispatch('getNewClass', s)
+                    // await this.$store.dispatch('getNewClass', s)
                     this.$message({
                         type: 'success',
                         message: '创建成功！'

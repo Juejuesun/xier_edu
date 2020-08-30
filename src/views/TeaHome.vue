@@ -16,10 +16,10 @@
       <el-container style=" padding: 0;">
         <el-aside width="250px">
           <div class="infobox">
-            <el-avatar style="border: 1px solid #606266;" :size="80" src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png" @click.native="dialogTableVisible=true">头像</el-avatar>
-            <div class="inlineinfo">江小白</div>
-            <div class="inlineinfo">登陆时间：2020.7.10 9:00</div>
-            <div class="inlineinfo">总学习时长：20小时</div>
+            <el-avatar style="border: 1px solid #606266;" :size="80" :src="accountInfo.avadar" @click.native="dialogTableVisible=true">头像</el-avatar>
+            <div class="inlineinfo">{{accountInfo.name}}</div>
+            <div class="inlineinfo">登陆时间：<span style="font-size: 5px;">{{accountInfo.date}}</span></div>
+            <div class="inlineinfo">总班级数：<span>{{accountInfo.classNum}}</span></div>
             <div class="inlineinfo saftybox" @click="pgchange('sft')">
               <i class="fa fa-shield" style="margin-right: 5px;"></i><span>安全设置</span>
             </div>
@@ -55,7 +55,7 @@
                             :before-upload="beforeAvatarUpload">
                             <el-button size="small" type="primary">点击上传</el-button>
                             <!-- <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div> -->
-                            </el-upload>
+                            </el-upload>  
                         </div>
                     </div>
                 </el-dialog>
@@ -99,10 +99,14 @@
 
 <script>
 import { VueCropper }  from 'vue-cropper'
+import { mapState } from "vuex";
 
 export default {
   components: {
         VueCropper
+    },
+    computed: {
+      ...mapState(["accountInfo"]),
     },
     data () {
         return {
@@ -214,37 +218,39 @@ export default {
                 this.previewImg = data
                 
                 let asc = {
-                    userId: this.userInfo.userId,
-                    userPicture: this.previewImg
+                  user_id: this.accountInfo.user_id,
+                  user_face: this.previewImg,
                 }
-                let res = {}
-                if(this.userInfo.userRoot===1) {
-                    const {data: ress} = await this.$http.post('/student/updatePicture', asc)
-                    res = ress
-                }else {
-                    const {data: rest} = await this.$http.post('/teacher/updatePicture', asc)
-                    res = rest
-                }
+                const { data: res } = await this.$http.post('/update_face', asc)
                 console.log(res)
-                if(res.status == 'success') {
-                    this.userInfo.userAvatar = this.previewImg
-                    this.oldImg =  this.userInfo.userAvatar
-                    // this.previewImg =t ''
-                    this.dialogVisible = false
-                    this.loading = false
-                    this.$message({
-                        message: '上传成功！',
-                        type: 'success'
-                    })
-                }else {
-                    this.$message({
-                        message: '上传失败！',
-                        type: 'error'
-                    })
-                    this.previewImg = this.oldImg
-                    this.loading = false
+                // let res = {}
+                // if(this.userInfo.userRoot===1) {
+                //     const {data: ress} = await this.$http.post('/student/updatePicture', asc)
+                //     res = ress
+                // }else {
+                //     const {data: rest} = await this.$http.post('/teacher/updatePicture', asc)
+                //     res = rest
+                // }
+                // console.log(res)
+                if (res.status == 200) {
+                  this.accountInfo.avadar = this.previewImg;
+                  this.oldImg = this.accountInfo.avadar;
+                  // this.previewImg =t ''
+                  this.dialogVisible = false;
+                  this.loading = false;
+                  this.$message({
+                    message: "上传成功！",
+                    type: "success",
+                  });
+                } else {
+                  this.$message({
+                    message: "上传失败！",
+                    type: "error",
+                  });
+                  this.previewImg = this.oldImg;
+                  this.loading = false;
                 }
-                this.dialogTableVisible = false
+                this.dialogTableVisible = false;
                 //上传阿里云服务器
                 // client().put(fileName, data).then(result => {
                 // this.dialogVisible = false
@@ -255,6 +261,10 @@ export default {
                 // })
             })
         }
+  },
+  created() {
+    // this.previewImg = 'data:image/jpg;base64,'+ this.accountInfo.avadar
+    this.previewImg = this.accountInfo.avadar
   }
 }
 </script>

@@ -25,8 +25,8 @@
               @click.native="dialogTableVisible=true"
             >头像</el-avatar>
             <!-- <img style="border: 1px solid #606266;" :size="80" :src="accountInfo.avadar" @click.native="dialogTableVisible=true"/> -->
-            <div class="inlineinfo">江小白</div>
-            <div class="inlineinfo">登陆时间：2020.7.10 9:00</div>
+            <div class="inlineinfo">{{accountInfo.name}}</div>
+            <div class="inlineinfo">登陆时间：<span style="font-size: 5px;">{{accountInfo.date}}</span></div>
             <div class="inlineinfo">总学习时长：20小时</div>
             <div class="inlineinfo saftybox" @click="pgchange('sft')">
               <i class="fa fa-shield" style="margin-right: 5px;"></i>
@@ -112,8 +112,8 @@
 </template>
 
 <script>
-import { VueCropper } from "vue-cropper";
-import { mapState } from "vuex";
+import { VueCropper } from "vue-cropper"
+import { mapState } from "vuex"
 
 export default {
   components: {
@@ -225,11 +225,11 @@ export default {
         // console.log('装酒',data)
         this.loading = true;
         this.previewImg = data;
-        console.log(this.previewImg)
+        // console.log(this.previewImg)
         let asc = {
           user_id: this.accountInfo.user_id,
           user_face: this.previewImg,
-        };
+        }
         const { data: res } = await this.$http.post('/update_face', asc)
         console.log(res)
 
@@ -279,7 +279,6 @@ export default {
     },
   },
   created() {
-    this.$store.dispatch('getClassList')
     // this.previewImg = 'data:image/jpg;base64,'+ this.accountInfo.avadar
     this.previewImg = this.accountInfo.avadar
   }

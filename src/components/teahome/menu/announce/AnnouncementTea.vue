@@ -40,6 +40,9 @@ export default {
     ancmeg() {
       this.isShow = !this.isShow
     }
+  },
+  created() {
+    this.$store.dispatch('getAnce')
   }
 }
 </script>

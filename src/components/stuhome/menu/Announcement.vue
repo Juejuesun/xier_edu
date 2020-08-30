@@ -27,7 +27,14 @@
 
 <script>
 export default {
-
+  data() {
+    return {
+      classId: 4
+    }
+  },
+  created() {
+    this.$store.dispatch('getNotices', this.classId)
+  }
 }
 </script>
 
