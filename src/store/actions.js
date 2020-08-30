@@ -1,4 +1,13 @@
-import { PUSH_ACCOUNT, GET_CLASS_LIST, GET_NOTICES, GET_TEA_CLASS_LIST, GET_TALKINGS, GET_ANCE } from './mutation-types'
+import {
+  PUSH_ACCOUNT,
+  GET_CLASS_LIST,
+  GET_NOTICES,
+  GET_TEA_CLASS_LIST,
+  GET_TALKINGS,
+  GET_ANCE,
+  GET_VIDEO_LIST,
+  GET_HOMEWORK_LIST
+} from './mutation-types'
 
 export default{
   pushAccount({commit}, doc) {
@@ -18,5 +27,11 @@ export default{
   },
   getAnce({commit}) {
     commit(GET_ANCE)
+  },
+  getVideoList({commit}) {
+    commit(GET_VIDEO_LIST)
+  },
+  getHomeworkList({commit}) {
+    commit(GET_HOMEWORK_LIST)
   }
 }

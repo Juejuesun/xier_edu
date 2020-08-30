@@ -31,7 +31,7 @@
       </el-input>
     </div>
     <div class="btnbox">
-       <el-button type="primary" round size="small" @click="getBackcms">回复</el-button>
+       <el-button type="primary" round size="small" @click="sendReply">回复</el-button>
     </div>
     <div>共 <span>{{tempInfo.oneTalking.replyNum}} 条回复</span></div>
     <el-divider></el-divider>
@@ -39,12 +39,23 @@
       <div class="backcon">{{item.content}}</div>
       <div class="card_btm">
         <div class="btm_chr">
-          <div class="chr_font">{{item.acture}}</div>
+          <div class="chr_font">{{item.userName}}</div>
           <div class="chr_font"><span>{{item.date}}</span>发表</div>
         </div>
         <div class="btm_chr">
-          <div class="chr_font">浏览<span>{{item.watch}}</span></div>
-          <div class="chr_font">回复<span>{{item.commit}}</span></div>
+          <!-- <div class="chr_font">浏览<span>{{item.watch}}</span></div> -->
+          <div class="chr_font">回复 <span>{{item.reply_num}}</span></div>
+        </div>
+      </div>
+      <div>
+        <div v-for="(reply, inds) in item.replys" :key="inds" class="repcont">
+          <div class="repbackcon">{{reply.content}}</div>
+          <div class="repcard_btm">
+            <div class="repbtm_chr">
+              <div class="repchr_font">{{reply.userName}}</div>
+              <div class="repchr_font"><span>{{reply.date}}</span>发表</div>
+            </div>
+          </div>
         </div>
       </div>
       <el-divider></el-divider>
@@ -68,34 +79,34 @@ export default {
         commit: '5'
       },
       backcomments: [
-        {
-          content: '电脑都是发票发动机发动机电脑都是发票发动机发动机电脑都是发票发动机发动机电脑都是发票发动机发动机。。。。',
-          acture: '江小白',
-          date: '2020-7-11',
-          watch: '10',
-          commit: '5'
-        },
-        {
-          content: '电脑都是发票发动机发动机电脑都是发票发动机发动机电脑都是发票发动机发动机电脑都是发票发动机发动机。。。。',
-          acture: '江小白',
-          date: '2020-7-11',
-          watch: '10',
-          commit: '5'
-        },
-        {
-          content: '电脑都是发票发动机发动机电脑都是发票发动机发动机电脑都是发票发动机发动机电脑都是发票发动机发动机。。。。',
-          acture: '江小白',
-          date: '2020-7-11',
-          watch: '10',
-          commit: '5'
-        },
-        {
-          content: '电脑都是发票发动机发动机电脑都是发票发动机发动机电脑都是发票发动机发动机电脑都是发票发动机发动机。。。。',
-          acture: '江小白',
-          date: '2020-7-11',
-          watch: '10',
-          commit: '5'
-        }
+        // {
+        //   content: '电脑都是发票发动机发动机电脑都是发票发动机发动机电脑都是发票发动机发动机电脑都是发票发动机发动机。。。。',
+        //   acture: '江小白',
+        //   date: '2020-7-11',
+        //   watch: '10',
+        //   commit: '5'
+        // },
+        // {
+        //   content: '电脑都是发票发动机发动机电脑都是发票发动机发动机电脑都是发票发动机发动机电脑都是发票发动机发动机。。。。',
+        //   acture: '江小白',
+        //   date: '2020-7-11',
+        //   watch: '10',
+        //   commit: '5'
+        // },
+        // {
+        //   content: '电脑都是发票发动机发动机电脑都是发票发动机发动机电脑都是发票发动机发动机电脑都是发票发动机发动机。。。。',
+        //   acture: '江小白',
+        //   date: '2020-7-11',
+        //   watch: '10',
+        //   commit: '5'
+        // },
+        // {
+        //   content: '电脑都是发票发动机发动机电脑都是发票发动机发动机电脑都是发票发动机发动机电脑都是发票发动机发动机。。。。',
+        //   acture: '江小白',
+        //   date: '2020-7-11',
+        //   watch: '10',
+        //   commit: '5'
+        // }
       ]
     }
   },
@@ -113,9 +124,36 @@ export default {
       console.log(res)
       if(res.status==200) {
         this.backcomments = JSON.parse(JSON.stringify(res.data))
-
+        for(let comt of this.backcomments) {
+          comt.replys = [] 
+        }
+        for(let comt of this.backcomments) {
+          // console.log(comt)
+          // comt.replys = []
+          if(comt.reply_num > 0) {
+            const {data: reps} = await this.$http.post('/get_replies', {comment_id: comt.comment_id})
+            console.log(reps)
+            if(reps.status == 200) {
+              comt.replys = JSON.parse(JSON.stringify(reps.data))
+            }
+          }
+        }
+        
       }
+    },
+    async sendReply() {
+      let asc = {
+        comment_id: this.tempInfo.oneTalking.id,
+        user_id: this.accountInfo.user_id,
+        talkings_id: this.tempInfo.oneTalking.id,
+        content: this.textareas
+      }
+      const {data: res} = await this.$http.post('send_reply', asc)
+      console.log(res)
     }
+  },
+  mounted() {
+    this.getBackcms()
   }
 }
 </script>
@@ -167,5 +205,30 @@ export default {
 .backcon {
   margin-top: 10px;
   margin-bottom: 10px;
+}
+
+/* 回复 */
+.repbackcon {
+  margin-top: 7px;
+  margin-bottom: 10px;
+  font-size: 15px;
+}
+.repcard_btm {
+  display: flex;
+  justify-content: space-between;
+}
+.repbtm_chr {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+.repchr_font {
+  margin: 5px;
+  margin-top: 10px;
+  font-size: 10px;
+  color: #606266;
+}
+.repcont {
+  margin-left: 50px;
 }
 </style>

@@ -9,14 +9,14 @@
         </div>
       </div>
       <el-divider></el-divider>
-      <div v-for="o in 3" :key="o">
+      <div v-for="(item, index) in anceList" :key="index">
         <div class="ancbox">
           <div style="width: 90%">
-            <p>公告标题</p>
-            <div>啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦</div>
+            <p>{{item.title}}</p>
+            <div>{{item.contant}}</div>
           </div>
           <div>
-            <el-button type="danger" size="small" round v-show="isShow">删除</el-button>
+            <el-button type="danger" size="small" round v-show="isShow" @click="delanc(item)">删除</el-button>
           </div>
         </div>
         
@@ -27,11 +27,16 @@
 </template>
 
 <script>
+import { mapState} from 'vuex'
+
 export default {
   data() {
     return {
       isShow: false
     }
+  },
+  computed: {
+    ...mapState([ 'accountInfo', 'anceList', 'tempInfo' ])
   },
   methods: {
     pushcomm() {
@@ -39,6 +44,28 @@ export default {
     },
     ancmeg() {
       this.isShow = !this.isShow
+    },
+    async delanc(row) {
+      console.log(row)
+      let asc = {
+        class_id: this.tempInfo.class_id,
+        notice_id: row.notice_id,
+        user_id: this.accountInfo.user_id
+      }
+      const {data: res} = await this.$http.post('/tech/del_notice', asc)
+      if(res.status == 200) {
+        this.$store.dispatch('getAnce')
+        this.$message({
+          type: 'success',
+          message: res.message + '！'
+        })
+      }else {
+        this.$message({
+          type: 'error',
+          message: res.message
+        })
+      }
+      
     }
   },
   created() {

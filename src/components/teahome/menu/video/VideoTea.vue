@@ -1,11 +1,13 @@
 <template>
   <div class="home">
-    <sheet-list v-for="(item,index) in sheetList" :item="item" :key="index"></sheet-list>
+    <sheet-list v-for="(item, index) in videoList" :item="item" :key="index"></sheet-list>
   </div>
 </template>
 
 <script>
 import VideosSheetList from "./VideosSheetList";
+import { mapState} from 'vuex'
+
 export default {
   components: { "sheet-list": VideosSheetList },
   data() {
@@ -52,8 +54,15 @@ export default {
       ],
     };
   },
-  methods: {},
-  mounted() {}
+  computed: {
+    ...mapState([ 'accountInfo', 'tempInfo', 'videoList' ])
+  },
+  methods: {
+
+  },
+  created() {
+    this.$store.dispatch('getVideoList')
+  }
 };
 </script>
 

@@ -1,4 +1,13 @@
-import { PUSH_ACCOUNT, GET_CLASS_LIST, GET_NOTICES, GET_TEA_CLASS_LIST, GET_TALKINGS, GET_ANCE } from './mutation-types'
+import {
+  PUSH_ACCOUNT,
+  GET_CLASS_LIST,
+  GET_NOTICES,
+  GET_TEA_CLASS_LIST,
+  GET_TALKINGS,
+  GET_ANCE,
+  GET_VIDEO_LIST,
+  GET_HOMEWORK_LIST
+} from './mutation-types'
 import axios from 'axios'
 
 export default{
@@ -49,6 +58,28 @@ export default{
     console.log(res)
     if(res.status == 200) {
       state.anceList = JSON.parse(JSON.stringify(res.data))
+    }
+  },
+  async [GET_VIDEO_LIST] (state) {
+    let asc = {
+      user_id: state.accountInfo.user_id,
+      class_id: state.tempInfo.class_id
+    }
+    const {data: res} = await axios.post('/get_course_list', asc)
+    console.log(res)
+    if(res.status == 200) {
+      state.videoList = JSON.parse(JSON.stringify(res.data))
+    }
+  },
+  async [GET_HOMEWORK_LIST] (state) {
+    let asc = {
+      user_id: state.accountInfo.user_id,
+      class_id: state.tempInfo.class_id
+    }
+    const {data: res} = await axios.post('/get_workList', asc)
+    console.log(res)
+    if(res.status == 200) {
+      state.homeworkList = JSON.parse(JSON.stringify(res.data))
     }
   }
 }

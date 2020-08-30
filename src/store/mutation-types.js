@@ -4,3 +4,5 @@ export const GET_NOTICES = 'get_notices'
 export const GET_TEA_CLASS_LIST = 'get_tea_class_list'
 export const GET_TALKINGS = 'get_talkings'  //获取讨论列表
 export const GET_ANCE = 'get_ance' //获取公告
+export const GET_VIDEO_LIST = 'get_video_list'  //获取视屏列表
+export const GET_HOMEWORK_LIST = 'get_homework_list'  //获取作业列表

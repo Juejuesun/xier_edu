@@ -54,7 +54,9 @@ export default {
     };
   },
   methods: {},
-  mounted() {}
+  created() {
+    this.$store.dispatch('getHomeworkList')
+  }
 };
 </script>
 
