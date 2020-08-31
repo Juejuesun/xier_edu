@@ -16,7 +16,7 @@
         <el-aside width="400px" style="heignt: 100%;" class="boxs">
           <el-main>
             <!-- <sheet-list :item="sheetList"/> -->
-            <sheet-list v-for="(item,index) in sheetList" :item="item" :key="index"></sheet-list>
+            <sheet-list v-for="(item,index) in videoList" :item="item" :key="index" @plus="updateUrl"></sheet-list>
           </el-main>
         </el-aside>
         <el-main style="background: rgba(242,242,242); height: 100%;">
@@ -38,6 +38,7 @@
 import { ByuiPlayerMp4 } from "@/plugins/byuiPlayer.js"
 // import Video from '../menu/Video'
 import playerSheetList from "./playerSheetList";
+import { mapState} from 'vuex'
 
 export default {
  components: {
@@ -116,16 +117,23 @@ export default {
       ]
     }
   },
+  computed: {
+    ...mapState([ 'accountInfo', 'tempInfo', 'videoList' ])
+  },
   methods: {
     backbtn() {
       this.$router.push({path: '/stuclass/video'})
     },
     pgchange() {
       this.$router.push({path: '/stuhome/classlist'})
+    },
+    updateUrl(newUrl) {
+      this.config1.url = newUrl
     }
   },
   created() {
     this.playrow = JSON.parse(this.$route.query.row)
+    this.config1.url = 'http://' + this.playrow.details_movie
   }
 }
 </script>
