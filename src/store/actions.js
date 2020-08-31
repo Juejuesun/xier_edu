@@ -6,7 +6,8 @@ import {
   GET_TALKINGS,
   GET_ANCE,
   GET_VIDEO_LIST,
-  GET_HOMEWORK_LIST
+  GET_HOMEWORK_LIST,
+  USER_SIGN_OUT
 } from './mutation-types'
 
 export default{
@@ -33,5 +34,8 @@ export default{
   },
   getHomeworkList({commit}) {
     commit(GET_HOMEWORK_LIST)
+  },
+  userSignOut({commit}) {
+    commit(USER_SIGN_OUT)
   }
 }

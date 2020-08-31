@@ -6,8 +6,10 @@ import {
   GET_TALKINGS,
   GET_ANCE,
   GET_VIDEO_LIST,
-  GET_HOMEWORK_LIST
+  GET_HOMEWORK_LIST,
+  USER_SIGN_OUT
 } from './mutation-types'
+
 import axios from 'axios'
 
 export default{
@@ -81,5 +83,10 @@ export default{
     if(res.status == 200) {
       state.homeworkList = JSON.parse(JSON.stringify(res.data))
     }
+  },
+  async [USER_SIGN_OUT] (state) {
+    const {data: res} = await axios.post('/auth/logout', {user_id: state.accountInfo.user_id})
+    console.log(res)
+    
   }
 }

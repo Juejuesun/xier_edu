@@ -9,7 +9,7 @@
         <div class="userh" @click="pgchange('home')">
           <i class="el-icon-user"></i>
         </div>
-        <el-button size="small" type="info" round>退出</el-button>
+        <el-button size="small" type="info" round @click="logout">退出</el-button>
       </div>
     </el-header>
     <el-main style=" padding: 0; margin: 0">
@@ -260,7 +260,11 @@ export default {
                 // this.loading = false
                 // })
             })
-        }
+        },
+    logout() {
+      this.$store.dispatch('userSignOut')
+      this.$router.push({path: '/login'})
+    }
   },
   created() {
     // this.previewImg = 'data:image/jpg;base64,'+ this.accountInfo.avadar

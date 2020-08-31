@@ -3,7 +3,7 @@
     <div class="headers">
       <el-page-header @back="goBack" :content="tempInfo.oneTalking.title" title="评论区"></el-page-header>
       <div>
-        <el-button type="info" round size="mini" v-show="tempInfo.oneTalking.userName === accountInfo.name">删除</el-button>
+        <el-button type="info" round size="mini" v-show="tempInfo.oneTalking.userName === accountInfo.name" @click="delcomt">删除</el-button>
       </div>
     </div>
     <el-divider></el-divider>
@@ -148,8 +148,24 @@ export default {
         talkings_id: this.tempInfo.oneTalking.id,
         content: this.textareas
       }
-      const {data: res} = await this.$http.post('send_reply', asc)
+      const {data: res} = await this.$http.post('/send_reply', asc)
       console.log(res)
+    },
+    async delcomt(){
+      const {data: res} = await this.$http.post('/del_talking', {talking_id: this.tempInfo.oneTalking.id})
+      console.log(res)
+      if(res.status == 200) {
+        this.goBack()
+        this.$message({
+          message: res.message + '！',
+          type: 'success'
+        })
+      }else {
+        this.$message({
+          message: res.message + '！',
+          type: 'error'
+        })
+      }
     }
   },
   mounted() {
