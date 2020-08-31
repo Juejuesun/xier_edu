@@ -9,7 +9,7 @@ chardet==3.0.4
 Click==7.0
 cycler==0.10.0
 dbhelpers==0.1.0.4
-Django==2.2.12
+Django==2.2.13
 dnspython==1.16.0
 dominate==2.5.1
 eventlet==0.25.1
