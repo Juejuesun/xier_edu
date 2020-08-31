@@ -1,12 +1,14 @@
 <template>
   <div class="home">
-    <sheet-list v-for="(item,index) in sheetList" :item="item" :key="index"></sheet-list>
+    <sheet-list v-for="(item,index) in homeworkList" :item="item" :key="index"></sheet-list>
   </div>
 </template>
 
 <script>
 // import HomeworkSheetList from "./HomeworkSheetList";
 import HomeworkSheetList from "./HomeworkSheetList";
+import { mapState} from 'vuex'
+
 export default {
   components: { "sheet-list": HomeworkSheetList },
   data() {
@@ -53,8 +55,13 @@ export default {
       ],
     };
   },
+  computed: {
+    ...mapState([ 'accountInfo', 'tempInfo', 'homeworkList' ])
+  },
   methods: {},
-  mounted() {}
+  created() {
+    this.$store.dispatch('getHomeworkList')
+  }
 };
 </script>
 

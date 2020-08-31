@@ -5,7 +5,8 @@ export default{
     account: '',
     classNum: '',
     date: '',
-    user_id: ''
+    user_id: '',
+    is_teacher: Boolean
   },
   classList: [],
   TeaClassList: [],

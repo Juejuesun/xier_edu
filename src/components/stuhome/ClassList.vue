@@ -7,8 +7,8 @@
         <p>主讲教师：<span>{{item.teacher}}</span></p>
         <p>班级：一年2班</p>
         <div>
-          <el-button size="mini" @click="pgch('CLS')">进入课程</el-button>
-          <el-button size="mini" @click="pgch('HWK')">查看作业</el-button>
+          <el-button size="mini" @click="pgch('CLS', item)">进入课程</el-button>
+          <el-button size="mini" @click="pgch('HWK', item)">查看作业</el-button>
         </div>
       </el-card>
     </div>
@@ -20,10 +20,11 @@ import { mapState } from 'vuex'
 
 export default {
   computed: {
-    ...mapState(['classList'])
+    ...mapState(['classList', 'TeaClassList', 'tempInfo' ])
   },
   methods: {
-    pgch(typ) {
+    pgch(typ, row) {
+      this.tempInfo.class_id = row.class_id
       if(typ==='CLS') {
         this.$router.push({path: '/stuclass/announcement'})
       }else {

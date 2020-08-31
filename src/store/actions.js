@@ -1,7 +1,6 @@
 import {
   PUSH_ACCOUNT,
   GET_CLASS_LIST,
-  GET_NOTICES,
   GET_TEA_CLASS_LIST,
   GET_TALKINGS,
   GET_ANCE,
@@ -16,9 +15,6 @@ export default{
   },
   getClassList({commit}) {
     commit(GET_CLASS_LIST)
-  },
-  getNotices({commit}, classId) {
-    commit(GET_NOTICES, {classId})
   },
   getTeaClassList({commit}) {
     commit(GET_TEA_CLASS_LIST)

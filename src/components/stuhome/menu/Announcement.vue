@@ -3,9 +3,9 @@
     <el-main>
       <div class="titlebox">公告</div>
       <el-divider></el-divider>
-      <div v-for="o in 3" :key="o">
-        <p>公告标题</p>
-        <div>啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦</div>
+      <div v-for="(item, index) in anceList" :key="index">
+        <p>{{item.title}}</p>
+        <div>{{item.contant}}</div>
         <el-divider></el-divider>
       </div>
     </el-main>
@@ -26,14 +26,21 @@
 </template>
 
 <script>
+import { mapState} from 'vuex'
+
 export default {
   data() {
     return {
       classId: 4
     }
   },
+  computed: {
+    ...mapState([ 'accountInfo', 'anceList', 'tempInfo' ])
+  },
   created() {
-    this.$store.dispatch('getNotices', this.classId)
+    // this.$store.dispatch('getNotices', this.classId)
+    this.$store.dispatch('getAnce')
+
   }
 }
 </script>

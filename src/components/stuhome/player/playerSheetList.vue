@@ -54,7 +54,8 @@ export default {
     showSheetMenu(row) {
       // alert(1111);
       console.log('hahah')
-      console.log(row)
+      // console.log(row)
+      this.$emit('plus', row)
       //  this.$router.push({
       //   name: 'VideoPlayer',
       //   query: {

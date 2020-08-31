@@ -8,7 +8,7 @@
         <div class="userh" @click="pgchange">
           <i class="el-icon-user"></i>
         </div>
-        <el-button size="small" type="info" round>退出</el-button>
+        <el-button size="small" type="info" round @click="logout">退出</el-button>
       </div>
     </el-header>
     <el-main style=" padding: 0; margin: 0;">
@@ -122,13 +122,29 @@ export default {
   },
   methods: {
     backbtn() {
-      this.$router.push({path: '/stuclass/video'})
+      if(this.accountInfo.is_teacher) {
+        this.$router.push({path: '/teaclass/video'})
+      }else {
+        this.$router.push({path: '/stuclass/video'})
+      }
     },
     pgchange() {
-      this.$router.push({path: '/stuhome/classlist'})
+      if(this.accountInfo.is_teacher) {
+        this.$router.push({path: '/teahome/classlist'})
+      }else {
+        this.$router.push({path: '/stuhome/classlist'})
+
+      }
     },
     updateUrl(newUrl) {
-      this.config1.url = newUrl
+      console.log(newUrl)
+      this.playrow = JSON.parse(JSON.stringify(newUrl))
+      this.config1.url = 'http://' + this.playrow.details_movie
+      // this.config1.url = newUrl
+    },
+    logout() {
+      this.$store.dispatch('userSignOut')
+      this.$router.push({path: '/login'})
     }
   },
   created() {

@@ -90,6 +90,7 @@ export default {
           const {data: res} = await this.$http.post('/auth/login', this.ruleForm)
           console.log(res)
           if(res.status == 200) {
+            res.data.is_teacher = this.ruleForm.is_teacher
             this.$store.dispatch('pushAccount', res.data)
             if(this.ruleForm.is_teacher === false) {            
               this.$router.push({path: '/stuhome'})

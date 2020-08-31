@@ -8,7 +8,7 @@
         <div class="userh" @click="pgchange">
           <i class="el-icon-user"></i>
         </div>
-        <el-button size="small" type="info" round>退出</el-button>
+        <el-button size="small" type="info" round @click="logout">退出</el-button>
       </div>
     </el-header>
     <el-main style=" padding: 0; margin: 0;">
@@ -52,6 +52,10 @@ export default {
     },
     pgchange() {
       this.$router.push({path: '/teahome/classlist'})
+    },
+    logout() {
+      this.$store.dispatch('userSignOut')
+      this.$router.push({path: '/login'})
     }
   },
 };

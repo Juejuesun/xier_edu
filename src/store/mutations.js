@@ -1,7 +1,6 @@
 import {
   PUSH_ACCOUNT,
   GET_CLASS_LIST,
-  GET_NOTICES,
   GET_TEA_CLASS_LIST,
   GET_TALKINGS,
   GET_ANCE,
@@ -22,6 +21,7 @@ export default{
     state.accountInfo.classNum = doc.classNum
     state.accountInfo.date = doc.date
     state.accountInfo.user_id = doc.user_id
+    state.accountInfo.is_teacher = doc.is_teacher
     window.sessionStorage.setItem('token', doc.token)
   },
   async [GET_CLASS_LIST] (state) {
@@ -29,16 +29,6 @@ export default{
     console.log(res)
     if(res.status == 200) {
       state.classList = JSON.parse(JSON.stringify(res.data))
-    }
-  },
-  async [GET_NOTICES] (state, {classId}) {  //获取公告
-    console.log(classId)
-    const {data: res} = await axios.post('/get_notices', {class_id: classId})
-    console.log(res)
-    if(res.status == 200) {
-      console.log(res.data)
-    }else {
-      console.log(res.message)
     }
   },
   async [GET_TEA_CLASS_LIST] (state) {

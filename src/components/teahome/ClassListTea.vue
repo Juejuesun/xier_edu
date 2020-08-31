@@ -20,7 +20,7 @@ import { mapState } from 'vuex'
 
 export default {
   computed: {
-    ...mapState(['accountInfo', 'TeaClassList', 'tempInfo'])
+    ...mapState(['accountInfo', 'TeaClassList', 'tempInfo' ])
   },
   methods: {
     pgch(typ, row) {
