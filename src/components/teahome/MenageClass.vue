@@ -87,7 +87,8 @@ export default {
         // ...mapState([ 'userInfo', 'memberList', 'teaClassInfo' ])
     },
     created() {
-        this.getPageTitle()
+        // this.getPageTitle()
+        this.$store.dispatch('getStuList')
     },
     methods: {
         leftback() {

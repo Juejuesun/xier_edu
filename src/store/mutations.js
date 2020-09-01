@@ -6,7 +6,8 @@ import {
   GET_ANCE,
   GET_VIDEO_LIST,
   GET_HOMEWORK_LIST,
-  USER_SIGN_OUT
+  USER_SIGN_OUT,
+  GET_STU_LIST
 } from './mutation-types'
 
 import axios from 'axios'
@@ -78,5 +79,14 @@ export default{
     const {data: res} = await axios.post('/auth/logout', {user_id: state.accountInfo.user_id})
     console.log(res)
     
+  },
+  async [GET_STU_LIST] (state) {
+    let asc = {
+      class_id: state.tempInfo.class_id,
+      user_id: state.accountInfo.user_id
+    }
+    const {data: res} = await axios.post('/manage/class_num_management', asc)
+    console.log(res)
+
   }
 }

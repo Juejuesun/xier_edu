@@ -5,7 +5,7 @@
     </div>
     <el-divider></el-divider>
     <div>
-      <h4>标题：哈哈哈</h4>
+      <h4>标题：<span>{{tempInfo.oneHomework.details_name}}</span></h4>
       <p>内容：哈哈哈哈</p>
       <!-- <p style="margin-left: 3em">
         <el-image
@@ -101,9 +101,9 @@ export default {
       },
     };
   },
-  // computed: {
-  //   ...mapState(["userInfo", "stuClassInfo"]),
-  // },
+  computed: {
+    ...mapState(["accountInfo", "tempInfo"]),
+  },
   methods: {
     goBack() {
       console.log("go back");
@@ -137,85 +137,88 @@ export default {
     //     }
     //   });
     // },
-    // async handleSave() {
-    //   //   this.$refs["form"].validate((valid) => {
-    //   //     this.$refs.form.validateField("content", (errorMsg) => {
-    //   //       this.borderColor = "#dcdfe6";
-    //   //       if (errorMsg) {
-    //   //         this.borderColor = "#F56C6C";
-    //   //       }
-    //   //     });
-    //   //     if (valid) {
-    //   //       this.$baseMessage("submit!", "success");
-    //   //     } else {
-    //   //       return false;
-    //   //     }
-    //   //   });
-    //   this.loading = true;
-    //   this.$loading({
-    //     text: "提交中",
-    //     background: "rgba(0, 0, 0, 0.7)",
-    //     target: document.querySelector(".box"),
-    //   });
-    //   console.log(this.form.content);
-    //   let formData = new FormData();
-    //   formData.append("submitContext", this.form.content);
-    //   formData.append("subjectId", this.$route.query.rowInfo.workId);
-    //   formData.append("studentId", this.userInfo.userId);
-    //   let asc = {
-    //     workId: this.$route.query.rowInfo.workId,
-    //     // subjectId: this.stuClassInfo.defaultInfo.subjectId,
-    //     studentId: this.userInfo.userId,
-    //     submitContext: this.form.content,
-    //   };
-    //   let config = {
-    //     headers: {
-    //       "Content-Type": "multipart/form-data",
-    //     },
-    //   };
-    //   let { data: res } = await this.$http.post("/student/submitWork", asc);
-    //   console.log(res);
-    //   if (res.status == "success") {
-    //     // this.form.content = ''
-    //     let { data: res } = await this.$http.post(
-    //       "/student/getWorksOfSubject",
-    //       {
-    //         studentId: this.userInfo.userId,
-    //         subjectId: this.stuClassInfo.defaultInfo.subjectId,
-    //       }
-    //     ); //切换
-    //     console.log(res);
-    //     this.$store.dispatch("pushChangeClass", res);
-    //     if (this.$route.query.rowInfo.subState == 0) {
-    //       this.stuClassInfo.defaultInfo.shouldSubmit--;
-    //     }
-    //     this.$router.back();
-    //     this.$message({
-    //       message: "提交成功！",
-    //       type: "success",
-    //     });
-    //   } else {
-    //     this.$message({
-    //       message: "提交失败！请重试！",
-    //       type: "error",
-    //     });
-    //   }
-    //   this.loading = false;
-    //   // this.$store.dispatch('pushWork', this.form)
-    // },
-    // async getWorkContent() {
-    //   let asc = {
-    //     studentId: this.userInfo.userId,
-    //     workId: this.$route.query.rowInfo.workId,
-    //   };
-    //   let { data: res } = await this.$http.post("/teacher/getSubContext", asc);
-    //   if (res) {
-    //     this.form.content = res.subContext;
-    //   }
-    // },
+    async handleSave() {
+      //   this.$refs["form"].validate((valid) => {
+      //     this.$refs.form.validateField("content", (errorMsg) => {
+      //       this.borderColor = "#dcdfe6";
+      //       if (errorMsg) {
+      //         this.borderColor = "#F56C6C";
+      //       }
+      //     });
+      //     if (valid) {
+      //       this.$baseMessage("submit!", "success");
+      //     } else {
+      //       return false;
+      //     }
+      //   });
+      this.loading = true;
+      this.$loading({
+        text: "提交中",
+        background: "rgba(0, 0, 0, 0.7)",
+        target: document.querySelector(".box"),
+      });
+      console.log(this.form.content);
+      // let formData = new FormData();
+      // formData.append("submitContext", this.form.content);
+      // formData.append("subjectId", this.$route.query.rowInfo.workId);
+      // formData.append("studentId", this.userInfo.userId);
+      let asc = {
+        user_id: this.accountInfo.user_id,
+        assignment_id: this.tempInfo.oneHomework.details_id,
+        content: this.form.content
+      }
+      // let config = {
+      //   headers: {
+      //     "Content-Type": "multipart/form-data",
+      //   },
+      // };
+      const { data: res } = await this.$http.post("/std/submit_work", asc);
+      console.log(res);
+      if (res.status == 200) {
+        // this.form.content = ''
+        // let { data: res } = await this.$http.post(
+        //   "/student/getWorksOfSubject",
+        //   {
+        //     studentId: this.userInfo.userId,
+        //     subjectId: this.stuClassInfo.defaultInfo.subjectId,
+        //   }
+        // ); //切换
+        // console.log(res);
+        // this.$store.dispatch("pushChangeClass", res);
+        // if (this.$route.query.rowInfo.subState == 0) {
+        //   this.stuClassInfo.defaultInfo.shouldSubmit--;
+        // }
+        // this.$router.back();
+        this.$message({
+          message: "提交成功！",
+          type: "success",
+        });
+      } else {
+        this.$message({
+          message: "提交失败！请重试！",
+          type: "error",
+        });
+      }
+      this.loading = false;
+      // this.$store.dispatch('pushWork', this.form)
+    },
+    async getWorkContent() {
+      if(this.tempInfo.oneHomework.details_isdone) {
+        let asc = {
+          user_id: this.accountInfo.user_id,
+          assignment_id: this.tempInfo.oneHomework.details_id
+        }
+        const { data: res } = await this.$http.post("/std/get_submit", asc);
+        console.log(res)
+        if (res.status == 200) {
+          this.form.content = res.data[0].content;
+        }
+      }
+      
+    },
   },
   created() {
-    this.getWorkContent();
+    this.getWorkContent()
   },
 };
 </script>

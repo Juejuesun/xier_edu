@@ -32,6 +32,8 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
+
 export default {
   components: {},
   props: {
@@ -44,6 +46,9 @@ export default {
       showSheets: false,
       data_item: {},
     };
+  },
+  computed: {
+    ...mapState(["accountInfo", "tempInfo"]),
   },
   methods: {
     //向右的小图标动画
@@ -61,6 +66,8 @@ export default {
           row: row.details_name
         }
       })
+      console.log(row)
+      this.tempInfo.oneHomework = JSON.parse(JSON.stringify(row))
     },
   },
   created() {
