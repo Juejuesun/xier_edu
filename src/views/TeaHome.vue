@@ -148,7 +148,7 @@ export default {
       }else if(targ=='home') { //进入个人住院日
         this.$router.push({path: '/teahome/classlist'})
       }else if(targ=='meg') { //班级管理
-        this.$router.push({path: '/teahome/menageclass'})        
+        this.$router.push({path: '/teahome/meglist'})        
       }else {
         this.$router.push({path: '/teahome/addnew'})
       }

@@ -20,6 +20,7 @@ import VideoPlayer from '../components/stuhome/player/VideoPlayer'
 
 import TeaHome from '../views/TeaHome'
 import ClassListTea from '../components/teahome/ClassListTea'
+import MegClassList from '../components/teahome/MegClassList'
 import MenageClass from '../components/teahome/MenageClass'
 import AddNewClass from '../components/teahome/AddNewClass'
 import TeaClass from '../views/TeaClass'
@@ -28,6 +29,7 @@ import HomeworkTea from '../components/teahome/menu/homework/HomeworkTea'
 import DisscussTea from '../components/teahome/menu/comment/DisscussTea'
 import VideoTea from '../components/teahome/menu/video/VideoTea'
 import AddNewAnc from '../components/teahome/menu/announce/AddNewAnc'
+
 
 Vue.use(VueRouter)
 
@@ -137,7 +139,12 @@ const routes = [
         component: SaftyPg
       },
       {
-        path: '/teahome/menageclass',
+        path: '/teahome/meglist',
+        name: 'MegClassList',
+        component: MegClassList
+      },
+      {
+        path: '/teahome/meglist/menageclass',
         name: 'MenageClass',
         component: MenageClass
       },

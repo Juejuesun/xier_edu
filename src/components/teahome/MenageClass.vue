@@ -9,8 +9,8 @@
         </el-header> -->
         <el-main class="mainbox">
             <div class="subInfoLine">
-                <div>
-                    <h4>课程号：123</h4>
+               <div>
+                    <el-page-header @back="goBack" :content="$route.query.title" title="返回"></el-page-header>
                 </div>
                 <div class="plusbtn">
                     <!-- <i class="fa fa-user-plus iconclass"  @click="dialogTableVisible = true"></i> -->
@@ -51,14 +51,14 @@
             </div>
             <el-divider></el-divider>
             <div style="margin-left: 50px;">
-                <!-- <el-table
-                :data="memberList.filter(data => !search || data.studentName.toLowerCase().includes(search.toLowerCase())|| data.studentId.toLowerCase().includes(search.toLowerCase()))"                
+                <el-table
+                :data="stuListMeg.filter(data => !search || data.username.toLowerCase().includes(search.toLowerCase())|| data.account.toLowerCase().includes(search.toLowerCase()))"
                 style="width: 100%"
                 @selection-change="handleSelectionChanges">
                     <el-table-column type="selection" width="55"></el-table-column>
-                    <el-table-column prop="studentName" label="姓名"  show-overflow-tooltip> </el-table-column>
-                    <el-table-column prop="studentId" label="学号"  show-overflow-tooltip> </el-table-column>
-                </el-table> -->
+                    <el-table-column prop="username" label="姓名"  show-overflow-tooltip> </el-table-column>
+                    <el-table-column prop="account" label="学号"  show-overflow-tooltip> </el-table-column>
+                </el-table>
             </div>
         </el-main>
     </el-container>
@@ -84,15 +84,16 @@ export default {
         }
     },
     computed: {
-        // ...mapState([ 'userInfo', 'memberList', 'teaClassInfo' ])
+        ...mapState(['accountInfo', 'stuListMeg', 'tempInfo' ])
     },
     created() {
         // this.getPageTitle()
         this.$store.dispatch('getStuList')
     },
     methods: {
-        leftback() {
-            this.$router.go(-1)
+        goBack() {
+            console.log('go back');
+            this.$router.back(-1)
         },
         getPageTitle() {
             // let grad = ['一', '二', '三', '四', '五', '六', '七', '八', '九']
@@ -192,18 +193,24 @@ export default {
         },
         async dismissClass() {
             let asc = {
-                subjectId: this.teaClassInfo.defaultInfo.subjectId
+                user_id: this.accountInfo.user_id,
+                class_id: this.tempInfo.class_id
             }
-            const {data: res} = await this.$http.post('/teacher/dismissClass', asc)
+            const {data: res} = await this.$http.post('/manage/close_class', asc)
             console.log(res)
-            if(res.status == 'success') {
+            if(res.status == 200) {
                 this.$message({
                     message: '删除成功！',
                     type: 'warning'
                 })
-                const s = 2
-                await this.$store.dispatch('getNewClass', s)
-                this.$router.go(-1)
+                // const s = 2
+                // await this.$store.dispatch('getNewClass', s)
+                this.goBack()
+            }else {
+                this.$message({
+                    message: res.message + '！',
+                    type: 'error'
+                })
             }
         }
     },
@@ -245,6 +252,7 @@ export default {
 .subInfoLine {
     display: flex;
     justify-content: space-between;
+    align-items: center;
 }
 .overline {
     display: flex;

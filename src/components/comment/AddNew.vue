@@ -78,8 +78,8 @@
         <!-- <el-container> -->
           <!-- <el-main> -->
           <el-table :data="stuList" style="width: 100%" :height="tableHeight">
-            <el-table-column property="studentName" label="姓 名" width="150"></el-table-column>
-            <el-table-column property="studentId" label="学 号" show-overflow-tooltip></el-table-column>
+            <el-table-column property="username" label="姓 名" width="150"></el-table-column>
+            <el-table-column property="account" label="学 号" show-overflow-tooltip></el-table-column>
           </el-table>
          <span slot="footer" class="dialog-footer">
           <el-button @click="fullscreenAct">{{btnmsg}}</el-button>
@@ -91,7 +91,7 @@
 
 <script>
 import XLSX from 'xlsx'
-// import {mapState} from 'vuex'
+import {mapState} from 'vuex'
 
 export default {
     data() {
@@ -108,9 +108,9 @@ export default {
             isfull: false
         }
     },
-    // computed: {
-    //   ...mapState(['teaClassInfo'])
-    // },
+    computed: {
+      ...mapState(['accountInfo', 'stuListMeg', 'tempInfo' ])
+    },
     methods: {
       beforeAvatarUpload(file) {
         var testmsg=file.name.substring(file.name.lastIndexOf('.')+1)
@@ -140,8 +140,8 @@ export default {
               // 封装
               sheetArray.map(v => {
                 let obj = {}     
-                obj.studentName = v.姓名
-                obj.studentId = v.学号
+                obj.username = v.姓名
+                obj.account = v.学号
                 this.stuList.push(obj)
               })
               console.log('stulist',this.stuList)
@@ -168,16 +168,20 @@ export default {
       },
       async addOne() {
         let asc = {
-          subjectIdOfStudnet: this.teaClassInfo.defaultInfo.subjectId,
-          students: [
+          user_id: this.accountInfo.user_id,
+          class_id: this.tempInfo.class_id,
+          add_new: [
             {
-              studentId: this.num,
-              studentName: this.name
+              account: this.num,
+              username: this.name
             }
-          ]
+          ],
+          init_password: '2020'
         }
-        let {data: res} = await this.$http.post('/teacher/addStudent', asc)
-        if(res.status == 'success'){
+        console.log(asc)
+        let {data: res} = await this.$http.post('/manage/add_single_std', asc)
+        console.log(res)
+        if(res.status == 200){
           this.$message({
             message: '添加成功！',
             type: 'success'

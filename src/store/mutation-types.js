@@ -7,3 +7,4 @@ export const GET_VIDEO_LIST = 'get_video_list'  //获取视屏列表
 export const GET_HOMEWORK_LIST = 'get_homework_list'  //获取作业列表
 export const USER_SIGN_OUT = 'user_sign_out'  //退出登陆
 export const GET_STU_LIST = 'get_stu_list'  //获取学生列表
+export const GET_MEG_CLASS_LIST = 'getMegClassList'  //获取班级管理列表

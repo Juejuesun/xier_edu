@@ -7,7 +7,8 @@ import {
   GET_VIDEO_LIST,
   GET_HOMEWORK_LIST,
   USER_SIGN_OUT,
-  GET_STU_LIST
+  GET_STU_LIST,
+  GET_MEG_CLASS_LIST
 } from './mutation-types'
 
 import axios from 'axios'
@@ -87,6 +88,15 @@ export default{
     }
     const {data: res} = await axios.post('/manage/class_num_management', asc)
     console.log(res)
-
+    if(res.status == 200) {
+      state.stuListMeg = JSON.parse(JSON.stringify(res.data))
+    }
+  },
+  async [GET_MEG_CLASS_LIST] (state) {
+    const {data: res} = await axios.post('/manage/class_management', {user_id: state.accountInfo.user_id})
+    console.log(res)
+    if(res.status == 200) {
+      state.megClassList = JSON.parse(JSON.stringify(res.data[0].classes_message))
+    }
   }
 }

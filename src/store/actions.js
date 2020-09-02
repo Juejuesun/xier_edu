@@ -7,7 +7,8 @@ import {
   GET_VIDEO_LIST,
   GET_HOMEWORK_LIST,
   USER_SIGN_OUT,
-  GET_STU_LIST
+  GET_STU_LIST,
+  GET_MEG_CLASS_LIST
 } from './mutation-types'
 
 export default{
@@ -37,5 +38,8 @@ export default{
   },
   getStuList({commit}) {
     commit(GET_STU_LIST)
+  },
+  getMegClassList({commit}) {
+    commit(GET_MEG_CLASS_LIST)
   }
 }
