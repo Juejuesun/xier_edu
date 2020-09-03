@@ -19,6 +19,7 @@ export default{
   tempInfo: {
     class_id: '',
     oneTalking: {},
-    oneHomework: {}
+    oneHomework: {},
+    isShow: false
   }
 }

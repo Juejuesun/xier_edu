@@ -6,6 +6,10 @@
         {{data_item.name}}
         <span>({{data_item.num}})</span>
       </span>
+      <span class="en-btn1">
+        <el-button  type="info" v-show="tempInfo.isShow" size="mini" @click.stop="rename('chap')">重命名</el-button>
+        <el-button  type="danger" v-show="tempInfo.isShow" size="mini" @click.stop="removehw('chap')" icon="el-icon-delete" circle></el-button>
+      </span>
       <!-- <i class="sheet-header-i el-icon-setting" @click.stop="showSheetMenu(data_item.name)"></i> -->
     </div>
 
@@ -14,6 +18,7 @@
       class="sheet-content"
       v-for="(i, index) in data_item.details"
       :key="index"
+      @click.stop="showSheetMenu(i)"
     >
       <!-- <div class="sheet-content-image">
         <img :src="i.details_image" width="50" height="50" style="padding: 5px;overflow: hidden" />
@@ -26,12 +31,37 @@
         <p style>{{i.details_name}}</p>
         <!-- <p style="margin-top: 10px;font-size: 14px;color: #666">{{i.details_num}}首歌曲</p> -->
       </div>
-      <i class="el-icon-more sheet-content-i" @click.stop="showSheetMenu(i)"></i>
+      <span class="en-btn2">
+        <el-button  type="info" v-show="tempInfo.isShow" size="mini" @click.stop="rename">重命名</el-button>
+        <el-button  type="danger" v-show="tempInfo.isShow" size="mini" @click.stop="rename" icon="el-icon-delete" circle></el-button>
+      </span>
+    </div>
+    <!-- 对话框 -->
+    <div>
+      <el-dialog
+        :visible.sync="EditVisible"
+        center
+        :close-on-click-modal="false"
+        :destroy-on-close="true"
+        @close="cancleadd"
+      >
+      <el-form :model="renameForm" label-width="80px">
+      <el-form-item label="标题">
+        <el-input v-model="renameForm.newName" placeholder="请输入新名称"></el-input>
+      </el-form-item>
+      <el-form-item>
+      <el-button type="primary" @click="reprename">确定</el-button>
+      <el-button @click="canclebtn">取消</el-button>
+      </el-form-item>
+      </el-form>
+    </el-dialog>
     </div>
   </div>
 </template>
 
 <script>
+import { mapState } from "vuex"
+
 export default {
   components: {},
   props: {
@@ -43,7 +73,14 @@ export default {
     return {
       showSheets: false,
       data_item: {},
+      EditVisible: false,
+      renameForm: {
+        newName: ''
+      }
     };
+  },
+  computed: {
+    ...mapState([ 'accountInfo', 'tempInfo', 'homeworkList' ])
   },
   methods: {
     //向右的小图标动画
@@ -56,12 +93,62 @@ export default {
     },
     showSheetMenu(row) {
       this.$router.push({
-        name: 'HomeworkDetail',
+        name: 'CheckView',
         query: {
           row: row.details_name
         }
       })
+    this.tempInfo.oneHomework = JSON.parse(JSON.stringify(row))
     },
+    cancleadd() {
+      this.renameForm.newName = ''
+    },
+    canclebtn() {
+      this.cancleadd()
+      this.EditVisible = false
+    },
+    async reprename() {
+      const {data: res} = await this.$http.post('/tech/rename_fc', {fc_id: this.data_item.id, name: this.renameForm.newName})
+      console.log(res)
+      if(res.status == 200) {
+        this.data_item.name = this.renameForm.newName
+        await this.$store.dispatch('getHomeworkList')
+        this.$message({
+          message: res.message +'！',
+          type: "success",
+        });
+        this.EditVisible = false
+      }else {
+        this.$message({
+          message: res.message +'！',
+          type: 'error',
+        });
+      }
+    },
+    async rename(type) {
+      // if(type === 'chap') {
+        this.EditVisible = true
+      // }
+    },
+    async removehw(type) {
+      if(type === 'chap') {
+        const {data: res} = await this.$http.post('/tech/del_fc', {fc_id: this.data_item.id})
+        console.log(res)
+        if(res.status == 200) {
+          await this.$store.dispatch('getHomeworkList')
+          this.$message({
+            message: res.message +'！',
+            type: "success",
+          });
+          this.EditVisible = false
+        }else {
+          this.$message({
+            message: res.message +'！',
+            type: 'error',
+          });
+        }
+      }
+    }
   },
   created() {
     this.data_item = this.item;
@@ -138,5 +225,17 @@ export default {
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
+}
+.en-btn1 {
+  line-height: 30px;
+  position: absolute;
+  right: 10px;
+}
+.en-btn2 {
+  line-height: 30px;
+  position: absolute;
+  right: 10px;
+  
+  align-self: center;
 }
 </style>

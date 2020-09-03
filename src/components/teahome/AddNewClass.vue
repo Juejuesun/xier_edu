@@ -234,7 +234,8 @@ export default {
                         type: 'success',
                         message: '创建成功！'
                     });
-                    this.leftback()
+                    // this.leftback()
+                    this.$router.push({path: '/teahome/meglist'})
                 }else {
                     this.$message({
                         type: 'error',

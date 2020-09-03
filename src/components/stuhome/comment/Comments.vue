@@ -43,11 +43,11 @@
           <div class="chr_font"><span>{{item.date}}</span>发表</div>
         </div>
         <div class="btm_chr">
-          <!-- <div class="chr_font">浏览<span>{{item.watch}}</span></div> -->
-          <div class="chr_font">回复 <span>{{item.reply_num}}</span></div>
+          <div class="chr_font"><el-button v-show="item.userName === accountInfo.name" type="info" icon="el-icon-delete" size="small" circle></el-button></div>
+          <!-- <div class="chr_font">回复 <span>{{item.reply_num}}</span></div> -->
         </div>
       </div>
-      <div>
+      <!-- <div>
         <div v-for="(reply, inds) in item.replys" :key="inds" class="repcont">
           <div class="repbackcon">{{reply.content}}</div>
           <div class="repcard_btm">
@@ -57,7 +57,7 @@
             </div>
           </div>
         </div>
-      </div>
+      </div> -->
       <el-divider></el-divider>
     </div>
   </div>  
@@ -78,36 +78,7 @@ export default {
         watch: '10',
         commit: '5'
       },
-      backcomments: [
-        // {
-        //   content: '电脑都是发票发动机发动机电脑都是发票发动机发动机电脑都是发票发动机发动机电脑都是发票发动机发动机。。。。',
-        //   acture: '江小白',
-        //   date: '2020-7-11',
-        //   watch: '10',
-        //   commit: '5'
-        // },
-        // {
-        //   content: '电脑都是发票发动机发动机电脑都是发票发动机发动机电脑都是发票发动机发动机电脑都是发票发动机发动机。。。。',
-        //   acture: '江小白',
-        //   date: '2020-7-11',
-        //   watch: '10',
-        //   commit: '5'
-        // },
-        // {
-        //   content: '电脑都是发票发动机发动机电脑都是发票发动机发动机电脑都是发票发动机发动机电脑都是发票发动机发动机。。。。',
-        //   acture: '江小白',
-        //   date: '2020-7-11',
-        //   watch: '10',
-        //   commit: '5'
-        // },
-        // {
-        //   content: '电脑都是发票发动机发动机电脑都是发票发动机发动机电脑都是发票发动机发动机电脑都是发票发动机发动机。。。。',
-        //   acture: '江小白',
-        //   date: '2020-7-11',
-        //   watch: '10',
-        //   commit: '5'
-        // }
-      ]
+      backcomments: []
     }
   },
   computed: {
@@ -143,13 +114,27 @@ export default {
     },
     async sendReply() {
       let asc = {
-        comment_id: this.tempInfo.oneTalking.id,
+        // comment_id: this.tempInfo.oneTalking.id,
         user_id: this.accountInfo.user_id,
-        talkings_id: this.tempInfo.oneTalking.id,
+        talking_id: this.tempInfo.oneTalking.id,
         content: this.textareas
       }
-      const {data: res} = await this.$http.post('/send_reply', asc)
+      const {data: res} = await this.$http.post('/send_comment', asc)
       console.log(res)
+      if(res.status == 200) {
+        this.textareas = ''
+        this.getBackcms()
+        this.tempInfo.oneTalking.replyNum ++
+        this.$message({
+          message: res.message + '！',
+          type: 'success'
+        })
+      }else {
+        this.$message({
+          message: res.message + '！',
+          type: 'error'
+        })
+      }
     },
     async delcomt(){
       const {data: res} = await this.$http.post('/del_talking', {talking_id: this.tempInfo.oneTalking.id})

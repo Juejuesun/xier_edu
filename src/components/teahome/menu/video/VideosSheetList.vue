@@ -6,7 +6,10 @@
         {{data_item.name}}
         <span>({{data_item.num}})</span>
       </span>
-      <!-- <i class="sheet-header-i el-icon-setting" @click.stop="showSheetMenu(data_item.name)"></i> -->
+      <span class="en-btn1">
+        <el-button  type="info" v-show="tempInfo.isShow" size="mini" @click.stop="rename('chap')">重命名</el-button>
+        <el-button  type="danger" v-show="tempInfo.isShow" size="mini" @click.stop="removehw('chap')" icon="el-icon-delete" circle></el-button>
+      </span>
     </div>
 
     <div
@@ -14,6 +17,7 @@
       class="sheet-content"
       v-for="(i, index) in data_item.details"
       :key="index"
+       @click.stop="showSheetMenu(i)"
     >
       <!-- <div class="sheet-content-image">
         <img :src="i.details_image" width="50" height="50" style="padding: 5px;overflow: hidden" />
@@ -26,7 +30,30 @@
         <p style>{{i.details_name}}</p>
         <!-- <p style="margin-top: 10px;font-size: 14px;color: #666">{{i.details_num}}首歌曲</p> -->
       </div>
-      <i class="el-icon-more sheet-content-i" @click="showSheetMenu(i)"></i>
+      <span class="en-btn2">
+        <el-button  type="info" v-show="tempInfo.isShow" size="mini" @click.stop="rename">重命名</el-button>
+        <el-button  type="danger" v-show="tempInfo.isShow" size="mini" @click.stop="rename" icon="el-icon-delete" circle></el-button>
+      </span>
+    </div>
+    <!-- 对话框 -->
+    <div>
+      <el-dialog
+        :visible.sync="EditVisible"
+        center
+        :close-on-click-modal="false"
+        :destroy-on-close="true"
+        @close="cancleadd"
+      >
+      <el-form :model="renameForm" label-width="80px">
+      <el-form-item label="标题">
+        <el-input v-model="renameForm.newName" placeholder="请输入新名称"></el-input>
+      </el-form-item>
+      <el-form-item>
+      <el-button type="primary" @click="reprename">确定</el-button>
+      <el-button @click="canclebtn">取消</el-button>
+      </el-form-item>
+      </el-form>
+    </el-dialog>
     </div>
   </div>
 </template>
@@ -43,7 +70,14 @@ export default {
     return {
       showSheets: false,
       data_item: {},
+      EditVisible: false,
+      renameForm: {
+        newName: ''
+      }
     };
+  },
+   computed: {
+    ...mapState([ 'accountInfo', 'tempInfo', 'videoList' ])
   },
   methods: {
     //向右的小图标动画
@@ -55,13 +89,14 @@ export default {
       this.showSheets = !this.showSheets;
     },
     showSheetMenu(row) {
-      // alert(1111);
       this.$router.push({
         name: 'VideoPlayer',
         query: {
           row: JSON.stringify(row)
         }
       })
+    this.tempInfo.oneHomework = JSON.parse(JSON.stringify(row))
+
     },
   },
   created() {

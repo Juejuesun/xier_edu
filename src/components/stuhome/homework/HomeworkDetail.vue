@@ -1,7 +1,7 @@
 <template>
   <div class="mainbox">
     <div>
-      <el-page-header @back="goBack" :content="$route.query.row" title="评论区"></el-page-header>
+      <el-page-header @back="goBack" :content="$route.query.row" title="作业"></el-page-header>
     </div>
     <el-divider></el-divider>
     <div>
@@ -152,7 +152,7 @@ export default {
       //     }
       //   });
       this.loading = true;
-      this.$loading({
+      const lodg = this.$loading({
         text: "提交中",
         background: "rgba(0, 0, 0, 0.7)",
         target: document.querySelector(".box"),
@@ -175,31 +175,24 @@ export default {
       const { data: res } = await this.$http.post("/std/submit_work", asc);
       console.log(res);
       if (res.status == 200) {
-        // this.form.content = ''
-        // let { data: res } = await this.$http.post(
-        //   "/student/getWorksOfSubject",
-        //   {
-        //     studentId: this.userInfo.userId,
-        //     subjectId: this.stuClassInfo.defaultInfo.subjectId,
-        //   }
-        // ); //切换
-        // console.log(res);
-        // this.$store.dispatch("pushChangeClass", res);
-        // if (this.$route.query.rowInfo.subState == 0) {
-        //   this.stuClassInfo.defaultInfo.shouldSubmit--;
-        // }
-        // this.$router.back();
-        this.$message({
-          message: "提交成功！",
-          type: "success",
-        });
+        setTimeout(() => {
+          this.$message({
+            message: "提交成功！",
+            type: "success",
+          });
+          lodg.close()
+          this.loading = false;
+        }, 2000);
       } else {
         this.$message({
           message: "提交失败！请重试！",
           type: "error",
         });
+        lodg.close()
+        this.loading = false;
       }
-      this.loading = false;
+      
+      
       // this.$store.dispatch('pushWork', this.form)
     },
     async getWorkContent() {

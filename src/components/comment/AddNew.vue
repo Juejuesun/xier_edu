@@ -167,51 +167,63 @@ export default {
         this.stuList = []
       },
       async addOne() {
-        let asc = {
-          user_id: this.accountInfo.user_id,
-          class_id: this.tempInfo.class_id,
-          add_new: [
-            {
-              account: this.num,
-              username: this.name
-            }
-          ],
-          init_password: '2020'
-        }
-        console.log(asc)
-        let {data: res} = await this.$http.post('/manage/add_single_std', asc)
-        console.log(res)
-        if(res.status == 200){
-          this.$message({
-            message: '添加成功！',
-            type: 'success'
-          })
-          this.num = ''
-          this.name = ''
-          if(this.$route.name == 'ClassSetting') {
-            this.$store.dispatch('getClassmates')
+        if(this.num&&this.name) {
+          let asc = {
+            user_id: this.accountInfo.user_id,
+            class_id: this.tempInfo.class_id,
+            add_new: [
+              {
+                account: this.num,
+                username: this.name
+              }
+            ],
+            init_password: '2020'
+          }
+          console.log(asc)
+          let {data: res} = await this.$http.post('/manage/add_single_std', asc)
+          console.log(res)
+          if(res.status == 200){
+            this.$message({
+              message: '添加成功！',
+              type: 'success'
+            })
+            this.$store.dispatch('getStuList')
+            this.num = ''
+            this.name = ''
+            // if(this.$route.name == 'ClassSetting') {
+            //   this.$store.dispatch('getClassmates')
+            // }
+          }else {
+            this.$message({
+              message: '请求失败！',
+              type: 'error'
+            })
           }
         }else {
           this.$message({
-            message: '请求失败！',
+            message: '请添加内容',
             type: 'error'
           })
         }
       },
       async addSome() {
         let asc = {
-          subjectIdOfStudnet: this.teaClassInfo.defaultInfo.subjectId,
-          students: this.stuList
+          user_id: this.accountInfo.user_id,
+          class_id: this.tempInfo.class_id,
+          add_new: this.stuList,
+          init_password: '2020'
         }
-        let {data: res} = await this.$http.post('/teacher/addStudent', asc)
-        if(res.status == 'success'){
+        console.log(asc)
+        let {data: res} = await this.$http.post('/manage/add_single_std', asc)
+        if(res.status == 200){
           this.$message({
             message: '添加成功！',
             type: 'success'
           })
-          if(this.$route.name == 'ClassSetting') {
-            this.$store.dispatch('getClassmates')
-          }
+          // if(this.$route.name == 'ClassSetting') {
+          //   this.$store.dispatch('getClassmates')
+          // }
+          this.$store.dispatch('getStuList')
         }else {
           this.$message({
             message: '请求失败！',

@@ -29,7 +29,9 @@ import HomeworkTea from '../components/teahome/menu/homework/HomeworkTea'
 import DisscussTea from '../components/teahome/menu/comment/DisscussTea'
 import VideoTea from '../components/teahome/menu/video/VideoTea'
 import AddNewAnc from '../components/teahome/menu/announce/AddNewAnc'
-
+import AddNewWork from '../components/teahome/menu/homework/AddNewWork'
+import Paper from '../components/teahome/menu/homework/paper/Paper'
+import CheckView from '../components/teahome/menu/homework/paper/CheckView'
 
 Vue.use(VueRouter)
 
@@ -186,9 +188,21 @@ const routes = [
         component: HomeworkTea
       },
       {
-        path: '/stuclass/homework/detail',
-        name: 'HomeworkDetail',
-        component: HomeworkDetail
+        path: '/teaclass/homework/newwork',
+        name: 'AddNewWork',
+        component: AddNewWork
+      },
+      {
+        path: '/teaclass/homework/paper',
+        name: 'Paper',
+        component: Paper,
+        children: [
+          {
+            path: '/teaclass/homework/paper/detail',
+            name: 'CheckView',
+            component: CheckView
+          },
+        ]
       },
       {
         path: '/teaclass/disscuss',
@@ -213,6 +227,7 @@ const routes = [
 ]
 
 const router = new VueRouter({
+  mode: 'hash',
   routes
 })
 
