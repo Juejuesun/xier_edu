@@ -2,8 +2,8 @@
   <div class="home">
     <div class="headerbtn">
       <div class="btns"> 
-        <el-button type="primary" round size="medium" @click="addnewwork" v-show="!tempInfo.isShow">发布新作业</el-button>
-        <el-button type="primary" round size="medium" @click="EditVisible = !EditVisible" v-show="tempInfo.isShow">创建新章节</el-button>
+        <el-button type="primary" round size="medium" @click="addnewwork" v-show="!tempInfo.isShowVideo">发布新作业</el-button>
+        <el-button type="primary" round size="medium" @click="EditVisible = !EditVisible" v-show="tempInfo.isShowVideo">创建新章节</el-button>
       </div>
       <div class="btns">
         <el-button type="primary" round size="medium" @click="cgang">{{btnName}}</el-button>
@@ -100,8 +100,8 @@ export default {
       }
     },
     cgang() {
-      this.tempInfo.isShow = !this.tempInfo.isShow
-      if(this.tempInfo.isShow === false) {
+      this.tempInfo.isShowVideo = !this.tempInfo.isShowVideo
+      if(this.tempInfo.isShowVideo === false) {
         this.btnName = '作业管理'
       }else {
         this.btnName = '完成'

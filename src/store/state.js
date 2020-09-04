@@ -20,6 +20,7 @@ export default{
     class_id: '',
     oneTalking: {},
     oneHomework: {},
-    isShow: false
+    isShow: false,
+    isShowVideo: false
   }
 }

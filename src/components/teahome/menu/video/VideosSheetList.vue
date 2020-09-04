@@ -7,8 +7,8 @@
         <span>({{data_item.num}})</span>
       </span>
       <span class="en-btn1">
-        <el-button  type="info" v-show="tempInfo.isShow" size="mini" @click.stop="rename('chap')">重命名</el-button>
-        <el-button  type="danger" v-show="tempInfo.isShow" size="mini" @click.stop="removehw('chap')" icon="el-icon-delete" circle></el-button>
+        <el-button  type="info" v-show="tempInfo.isShowVideo" size="mini" @click.stop="rename('chap')">重命名</el-button>
+        <el-button  type="danger" v-show="tempInfo.isShowVideo" size="mini" @click.stop="removehw('chap')" icon="el-icon-delete" circle></el-button>
       </span>
     </div>
 
@@ -31,8 +31,8 @@
         <!-- <p style="margin-top: 10px;font-size: 14px;color: #666">{{i.details_num}}首歌曲</p> -->
       </div>
       <span class="en-btn2">
-        <el-button  type="info" v-show="tempInfo.isShow" size="mini" @click.stop="rename">重命名</el-button>
-        <el-button  type="danger" v-show="tempInfo.isShow" size="mini" @click.stop="rename" icon="el-icon-delete" circle></el-button>
+        <el-button  type="info" v-show="tempInfo.isShow" size="mini" @click.stop="rename()">重命名</el-button>
+        <el-button  type="danger" v-show="tempInfo.isShow" size="mini" @click.stop="rename()" icon="el-icon-delete" circle></el-button>
       </span>
     </div>
     <!-- 对话框 -->
@@ -59,6 +59,8 @@
 </template>
 
 <script>
+import { mapState } from "vuex"
+
 export default {
   components: {},
   props: {
@@ -95,9 +97,19 @@ export default {
           row: JSON.stringify(row)
         }
       })
-    this.tempInfo.oneHomework = JSON.parse(JSON.stringify(row))
+      this.tempInfo.oneHomework = JSON.parse(JSON.stringify(row))
+    },
+    cancleadd() {
+      this.renameForm.newName = ''
+    },
+    canclebtn() {
+      this.cancleadd()
+      this.EditVisible = false
+    },
+    reprename() {
 
     },
+    removehw() {}
   },
   created() {
     this.data_item = this.item;

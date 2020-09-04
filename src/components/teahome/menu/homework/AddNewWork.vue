@@ -16,7 +16,7 @@
               v-for="(item, index) in homeworkList"
               :key="index"
               :label="'第 ' + (index+1) + ' 章'"
-              :value="item.name"
+              :value="item.id"
             ></el-option>
             <!-- <el-option label="加在最后" value="1"></el-option> -->
           </el-select>
