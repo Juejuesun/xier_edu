@@ -26,7 +26,7 @@
               <div class="bx">公告</div>
             </router-link>
             <router-link to="/teaclass/video">
-              <div class="bx">视频</div>
+              <div class="bx">课程</div>
             </router-link>
             <router-link to="/teaclass/homework">
               <div class="bx">作业</div>

@@ -2,7 +2,7 @@
   <div class="home">
     <div class="headerbtn">
       <div class="btns"> 
-        <el-button type="primary" round size="medium" @click="addnewwork" v-show="!tempInfo.isShowVideo">发布新作业</el-button>
+        <el-button type="primary" round size="medium" @click="addnewvio" v-show="!tempInfo.isShowVideo">发布新课程</el-button>
         <el-button type="primary" round size="medium" @click="EditVisible = !EditVisible" v-show="tempInfo.isShowVideo">创建新章节</el-button>
       </div>
       <div class="btns">
@@ -63,8 +63,8 @@ export default {
     ...mapState([ 'accountInfo', 'tempInfo', 'videoList' ])
   },
   methods: {
-    addnewwork() {
-      this.$router.push({path: '/teaclass/homework/newwork'})
+    addnewvio() {
+      this.$router.push({path: '/teaclass/video/newvio'})
     },
     cancleadd() {
       this.addnewchap.title = ''

@@ -5,34 +5,29 @@
     </div>
     <el-divider></el-divider>
     <div>
-      <h4>发布作业</h4>
+      <h4>发布课程</h4>
     </div>
     <div>
       <el-form ref="form" :model="form" label-width="80px">
         <el-form-item label="选择章节">
-          <!-- <el-select v-model="form.region" placeholder="章节选择">
+          <el-select v-model="form.region" placeholder="章节选择">
+            <!-- <el-option label="加在最前" value="0"></el-option> -->
             <el-option
-              v-for="(item, index) in homeworkList"
+              v-for="(item, index) in videoList"
               :key="index"
               :label="'第 ' + (index+1) + ' 章'"
               :value="item.id"
             ></el-option>
-          </el-select> -->
-          <el-cascader
-            v-model="form.region"
-            :options="options"
-            @change="handleChange"></el-cascader>
+            <!-- <el-option label="加在最后" value="1"></el-option> -->
+          </el-select>
           <span> . </span>
           <el-button type="primary" @click="EditVisible = !EditVisible">创建新章节</el-button>
         </el-form-item>
-        <el-form-item label="作业名称">
+        <el-form-item label="课程标题">
           <el-input v-model="form.workTitle"></el-input>
         </el-form-item>
-        <el-form-item label="作业内容">
-          <el-input type="textarea" v-model="form.workContext"></el-input>
-        </el-form-item>
         <el-form-item label="上传图片">
-          <el-upload
+          <!-- <el-upload
             ref="uploadpub"
             action="https://jsonplaceholder.typicode.com/posts/"
             list-type="picture-card"
@@ -42,22 +37,17 @@
             :auto-upload="false"
           >
             <i class="el-icon-plus"></i>
-            <!-- <div slot="file" slot-scope="{file}">
-              <img class="el-upload-list__item-thumbnail" :src="file.url" alt />
-              <span class="el-upload-list__item-actions">
-                <span class="el-upload-list__item-preview" @click="handlePictureCardPreview(file)">
-                  <i class="el-icon-zoom-in"></i>
-                </span>
-                <span
-                  v-if="!disabled"
-                  class="el-upload-list__item-delete"
-                  @click="handleRemove(file)"
-                >
-                  <i class="el-icon-delete"></i>
-                </span>
-              </span>
-            </div>-->
-          </el-upload>
+          </el-upload> -->
+          <el-upload
+                    class="upload-demo"
+                    action="http://127.0.0.1:5000/tech/create_sc"
+                    :on-remove="handleRemove"
+                    list-type="picture-card"
+                    :show-file-list="false"
+                    :multiple="false" :limit="1" :on-success="UploadSuccess">
+                <el-button size="small" type="primary" plain>点击上传</el-button>
+                <div slot="tip" class="el-upload__tip">只能上传mp4文件</div>
+            </el-upload>
           <el-dialog :visible.sync="dialogVisible" :modal="false">
             <img width="100%" :src="dialogImageUrl" alt />
           </el-dialog>
@@ -65,19 +55,9 @@
         <!-- <el-form-item label="作业号" style="width: 50%;">
                             <el-input v-model="form.workId"></el-input>
         </el-form-item>-->
-        <el-form-item label="截止时间">
-          <el-date-picker
-            type="date"
-            placeholder="选择日期"
-            v-model="form.workCloseTime"
-            value-format="yyyy-MM-dd"
-            style="width: 50%;"
-          ></el-date-picker>
-        </el-form-item>
         <el-form-item>
           <el-button :loading="loading" type="primary" @click="onSubmit">立即发布</el-button>
           <el-button @click="cancleSub('pub')">取消</el-button>
-          <el-button @click="getOptions">级联</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -97,7 +77,7 @@
       <el-select v-model="addnewchap.chapter" placeholder="章节选择">
         <el-option label="在最前加入" value="front"></el-option>
         <el-option
-          v-for="(item, index) in homeworkList"
+          v-for="(item, index) in videoList"
           :key="index"
           :label="'在第 ' + (index+1) + ' 章后加入'"
           :value="item.name"
@@ -132,9 +112,8 @@ export default {
         workContext: "",
         pictures: [],
         isShow: false,
-        region: [],
+        region: "",
       },
-      options: [],//级联选择器
       addnewchap: {
         title: '',
         chapter: ''
@@ -205,16 +184,16 @@ export default {
       let tem = await this.transforBase(file);
       this.iconBase64.push(tem);
     },
-    async handleRemove(file, fileList) {
-      console.log(file, fileList);
-      this.iconBase64 = [];
-      for (let v of fileList) {
-        console.log(v);
-        let tem = await this.transforBase(v.raw);
-        this.iconBase64.push(tem);
-      }
-      console.log("移除后", this.iconBase64);
-    },
+    // async handleRemove(file, fileList) {
+    //   console.log(file, fileList);
+    //   this.iconBase64 = [];
+    //   for (let v of fileList) {
+    //     console.log(v);
+    //     let tem = await this.transforBase(v.raw);
+    //     this.iconBase64.push(tem);
+    //   }
+    //   console.log("移除后", this.iconBase64);
+    // },
     handlePictureCardPreview(file) {
       this.dialogImageUrl = file.url;
     },
@@ -239,12 +218,11 @@ export default {
       console.log(this.form.pictures);
       // 发送请求，暂无图片
       let asc = {
-        sc_id: this.form.region[1],
+        sc_id: this.form.region,
         title: this.form.workTitle,
         content: this.form.workContext,
         // closeTime: this.form.workCloseTime,
         imgs: this.form.pictures,
-        class_id: this.tempInfo.class_id,
       }
       // for (let v of this.form.pictures) {
       //   let s = {
@@ -288,32 +266,15 @@ export default {
         this.$refs.upload.clearFiles();
       }
     },
-    handleChange(value) {
-      console.log(value);
-    },
-    getOptions() {
-      for( let [index, op] of this.videoList.entries()) {
-        let tem = {
-          value: op.id,
-          label: '第 '+ (index+1) + ' 章',
-          children: []
-        }
-        if(op.details) {
-          for(let chr of op.details) {
-            let iner = {
-              value: chr.details_id,
-              label: chr.details_name
+    handleRemove(){
+                return this.$message.info("取消上传");
+            },
+            UploadSuccess(){
+                return this.$message.success("上传成功");
+
             }
-            tem.children.push(iner)
-          }
-          this.options.push(tem)
-        }
-      }
-    }
   },
-  created() {
-    this.getOptions()
-  },
+  created() {},
 };
 </script>
 

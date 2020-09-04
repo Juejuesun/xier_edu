@@ -53,7 +53,8 @@ import {
   BreadcrumbItem,
   Checkbox,
   Link,
-  PageHeader
+  PageHeader,
+  Cascader
 } from 'element-ui'
 
 Vue.use(Button)
@@ -105,6 +106,7 @@ Vue.use(BreadcrumbItem)
 Vue.use(Checkbox)
 Vue.use(Link)
 Vue.use(PageHeader)
+Vue.use(Cascader)
 
 Vue.prototype.$message = Message
 Vue.prototype.$confirm = MessageBox

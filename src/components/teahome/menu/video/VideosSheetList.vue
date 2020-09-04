@@ -66,7 +66,7 @@ export default {
   props: {
     item: {
       type: Object,
-    },
+    }
   },
   data() {
     return {
@@ -186,5 +186,17 @@ export default {
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
+}
+.en-btn1 {
+  line-height: 30px;
+  position: absolute;
+  right: 10px;
+}
+.en-btn2 {
+  line-height: 30px;
+  position: absolute;
+  right: 10px;
+  
+  align-self: center;
 }
 </style>

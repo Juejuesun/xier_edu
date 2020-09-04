@@ -30,6 +30,7 @@ import DisscussTea from '../components/teahome/menu/comment/DisscussTea'
 import VideoTea from '../components/teahome/menu/video/VideoTea'
 import AddNewAnc from '../components/teahome/menu/announce/AddNewAnc'
 import AddNewWork from '../components/teahome/menu/homework/AddNewWork'
+import AddNewVideo from '../components/teahome/menu/video/AddNewVideo'
 import Paper from '../components/teahome/menu/homework/paper/Paper'
 import CheckView from '../components/teahome/menu/homework/paper/CheckView'
 
@@ -176,6 +177,11 @@ const routes = [
         path: '/teaclass/video',
         name: 'VideoTea',
         component: VideoTea
+      },
+      {
+        path: '/teaclass/video/newvio',
+        name: 'AddNewVideo',
+        component: AddNewVideo
       },
       // {
       //   path: '/stuclass/video/player',
