@@ -4,13 +4,13 @@
       <div class="titlebox">公告</div>
       <el-divider></el-divider>
       <div v-for="(item, index) in anceList" :key="index">
-        <p>{{item.title}}</p>
+        <h3>{{item.title}}</h3>
         <div>{{item.contant}}</div>
         <el-divider></el-divider>
       </div>
     </el-main>
   <el-aside width="200px">
-    <div class="asiders">
+    <!-- <div class="asiders">
       <div class="asidebox">最新更新</div>
       <p style="color: #909399;">课程</p>
       <div>
@@ -20,7 +20,7 @@
       <div>
         <el-link type="primary">作业列表</el-link>
       </div>
-    </div>
+    </div> -->
   </el-aside>
   </el-container>
 </template>

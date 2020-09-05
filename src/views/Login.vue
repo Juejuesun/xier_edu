@@ -3,7 +3,7 @@
     <div class="headerbox">教育平台</div>
     <div class="mainbox">
       <div class="imgbox">
-        <el-image src="https://cube.elemecdn.com/6/94/4d3ea53c084bad6931a56d5158a48jpeg.jpeg"></el-image>
+        <el-image src="https://pic.downk.cc/item/5f24223a14195aa594afdaf8.jpg"></el-image>
       </div>
       <div class="login_box">
         <div class="angle">

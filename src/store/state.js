@@ -16,6 +16,7 @@ export default{
   homeworkList: [], //获取作业列表
   stuListMeg: [],  //获取学生列表
   megClassList: [], //班级管理列表
+  subedInfo: [],
   tempInfo: {
     class_id: '',
     oneTalking: {},

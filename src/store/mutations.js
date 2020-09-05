@@ -8,7 +8,8 @@ import {
   GET_HOMEWORK_LIST,
   USER_SIGN_OUT,
   GET_STU_LIST,
-  GET_MEG_CLASS_LIST
+  GET_MEG_CLASS_LIST,
+  GET_AT_SUBMIT
 } from './mutation-types'
 
 import axios from 'axios'
@@ -97,6 +98,13 @@ export default{
     console.log(res)
     if(res.status == 200) {
       state.megClassList = JSON.parse(JSON.stringify(res.data[0].classes_message))
+    }
+  },
+  async [GET_AT_SUBMIT] (state) {
+    const {data: res} = await axios.post('/tech/get_assignment_submit', {assignment_id: state.tempInfo.oneHomework.details_id})
+    console.log(res)
+    if(res.status == 200) {
+      state.subedInfo = JSON.parse(JSON.stringify(res.data[0]))
     }
   }
 }

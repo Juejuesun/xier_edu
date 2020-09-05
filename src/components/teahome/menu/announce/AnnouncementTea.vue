@@ -12,7 +12,7 @@
       <div v-for="(item, index) in anceList" :key="index">
         <div class="ancbox">
           <div style="width: 90%">
-            <p>{{item.title}}</p>
+            <h3>{{item.title}}</h3>
             <div>{{item.contant}}</div>
           </div>
           <div>

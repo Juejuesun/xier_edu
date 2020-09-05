@@ -8,7 +8,8 @@ import {
   GET_HOMEWORK_LIST,
   USER_SIGN_OUT,
   GET_STU_LIST,
-  GET_MEG_CLASS_LIST
+  GET_MEG_CLASS_LIST,
+  GET_AT_SUBMIT
 } from './mutation-types'
 
 export default{
@@ -41,5 +42,8 @@ export default{
   },
   getMegClassList({commit}) {
     commit(GET_MEG_CLASS_LIST)
+  },
+  getAtSubmit({commit}) {
+    commit(GET_AT_SUBMIT)
   }
 }

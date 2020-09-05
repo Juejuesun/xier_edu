@@ -80,7 +80,7 @@ export default {
         const {data: res} = await this.$http.post('/tech/create_fc', asc)
         console.log(res)
         if(res.status == 200) {
-          await this.$store.dispatch('getHomeworkList')
+          await this.$store.dispatch('getVideoList')
           this.$message({
             message: res.message +'！',
             type: "success",
@@ -102,7 +102,7 @@ export default {
     cgang() {
       this.tempInfo.isShowVideo = !this.tempInfo.isShowVideo
       if(this.tempInfo.isShowVideo === false) {
-        this.btnName = '作业管理'
+        this.btnName = '课程管理'
       }else {
         this.btnName = '完成'
       }

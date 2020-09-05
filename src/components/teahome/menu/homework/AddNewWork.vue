@@ -39,7 +39,7 @@
             :before-upload="handleBefore"
             :on-preview="handlePictureCardPreview"
             :on-remove="handleRemove"
-            :auto-upload="false"
+            :auto-upload="true"
           >
             <i class="el-icon-plus"></i>
             <!-- <div slot="file" slot-scope="{file}">
@@ -77,7 +77,7 @@
         <el-form-item>
           <el-button :loading="loading" type="primary" @click="onSubmit">立即发布</el-button>
           <el-button @click="cancleSub('pub')">取消</el-button>
-          <el-button @click="getOptions">级联</el-button>
+          <!-- <el-button @click.native="getdjao">级联</el-button> -->
         </el-form-item>
       </el-form>
     </div>
@@ -145,6 +145,10 @@ export default {
     ...mapState(["accountInfo", "tempInfo", "homeworkList", "videoList"]),
   },
   methods: {
+    getdjao() {
+      console.log('get')
+      this.$store.dispatch('getAtSubmit')
+    },
     goBack() {
       console.log("go back");
       this.$router.back(-1);
@@ -164,6 +168,7 @@ export default {
         console.log(res)
         if(res.status == 200) {
           this.$store.dispatch('getHomeworkList')
+          this.getOptions()
           this.$message({
             message: res.message +'！',
             type: "success",
@@ -233,7 +238,7 @@ export default {
     },
     async onSubmit() {
       this.loading = true;
-      await this.$refs.uploadpub.submit();
+      // await this.$refs.uploadpub.submit();
       console.log("submit!");
       this.form.pictures = this.iconBase64;
       console.log(this.form.pictures);

@@ -2,7 +2,7 @@
   <div>
     <div class="list" >
       <el-card class="box-card" shadow="hover" v-for="(item, index) in classList" :key="index">
-        <el-image style="width: 100%; height: 150px" src="https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg" fit="fit"></el-image>
+        <el-image style="width: 100%; height: 150px" src="https://pic.downk.cc/item/5ec117a9c2a9a83be54a5c52.png" fit="fit"></el-image>
         <h3>{{item.subName}}</h3>
         <p>主讲教师：<span>{{item.teacher}}</span></p>
         <p>班级：一年2班</p>

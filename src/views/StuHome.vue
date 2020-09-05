@@ -2,10 +2,10 @@
   <el-container>
     <el-header class="header_box">
       <div class="inpout">
-        <input class="inpbox" placeholder="请输入课程名称" />
+        <!-- <input class="inpbox" placeholder="请输入课程名称" />
         <div class="scbtn">
           <i class="el-icon-search"></i>
-        </div>
+        </div> -->
       </div>
       <div class="asibtn">
         <div class="userh" @click="pgchange('home')">
@@ -28,12 +28,15 @@
             <div class="inlineinfo">{{accountInfo.name}}</div>
             <div class="inlineinfo">登陆时间：<span style="font-size: 5px;">{{accountInfo.date}}</span></div>
             <div class="inlineinfo">总学习时长：20小时</div>
+            <div class="inlineinfo saftybox" @click="pgchange('grs')">
+              <i class="el-icon-user" style="margin-right: 5px;"></i><span>个人中心</span>
+            </div>
             <div class="inlineinfo saftybox" @click="pgchange('sft')">
-              <i class="fa fa-shield" style="margin-right: 5px;"></i>
+              <i class="el-icon-price-tag" style="margin-right: 5px;"></i>
               <span>安全设置</span>
             </div>
           </div>
-          <div class="messagebox">消息通知</div>
+          <!-- <div class="messagebox">消息通知</div> -->
 
           <!-- 更换头像 -->
           <div>
@@ -158,7 +161,9 @@ export default {
     pgchange(targ) {
       if (targ == "sft") {
         this.$router.push({ path: "/stuhome/saftypg" });
-      } else {
+      }else if(targ == 'grs') {
+        this.pgchange('home')
+      }else {
         this.$router.push({ path: "/stuhome/classlist" });
       }
     },

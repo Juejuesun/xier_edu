@@ -6,16 +6,16 @@
     <el-divider></el-divider>
     <div>
       <h4>标题：<span>{{tempInfo.oneHomework.details_name}}</span></h4>
-      <p>内容：哈哈哈哈</p>
-      <!-- <p style="margin-left: 3em">
+      <p>内容：{{worktent.content}}</p>
+      <p style="margin-left: 3em">
         <el-image
-          v-for="(img, index) in $route.query.rowInfo.pictures"
+          v-for="(img, index) in worktent.imgs"
           :key="index"
           style="width: 100px; height: 100px; margin-right: 10px;"
           :src="img"
           :preview-src-list="$route.query.rowInfo.pictures"
         ></el-image>
-      </p> -->
+      </p>
     </div>
     <div style="height: 500px" class="box">
       <quill-editor
@@ -57,6 +57,7 @@ export default {
         module: "",
         content: "",
       },
+      worktent: {},
       editorOption: {
         placeholder: "",
         modules: {
@@ -196,6 +197,11 @@ export default {
       // this.$store.dispatch('pushWork', this.form)
     },
     async getWorkContent() {
+      const {data: reswork} = await this.$http.post('get_work', {assignment_id: this.tempInfo.oneHomework.details_id})
+      console.log(reswork)
+      if(reswork.status == 200) {
+        this.worktent = JSON.parse(JSON.stringify(reswork.data))
+      }
       if(this.tempInfo.oneHomework.details_isdone) {
         let asc = {
           user_id: this.accountInfo.user_id,

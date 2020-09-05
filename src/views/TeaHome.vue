@@ -2,8 +2,8 @@
   <el-container>
     <el-header class="header_box">
       <div class="inpout">
-        <input class="inpbox" placeholder="请输入课程名称"/>
-        <div class="scbtn"><i class="el-icon-search"></i></div>
+        <!-- <input class="inpbox" placeholder="请输入课程名称"/>
+        <div class="scbtn"><i class="el-icon-search"></i></div> -->
       </div>
       <div class="asibtn">
         <div class="userh" @click="pgchange('home')">
@@ -20,19 +20,20 @@
             <div class="inlineinfo">{{accountInfo.name}}</div>
             <div class="inlineinfo">登陆时间：<span style="font-size: 5px;">{{accountInfo.date}}</span></div>
             <div class="inlineinfo">总班级数：<span>{{accountInfo.classNum}}</span></div>
+            <div class="inlineinfo saftybox" @click="pgchange('grs')">
+              <i class="el-icon-user" style="margin-right: 5px;"></i><span>个人中心</span>
+            </div>
             <div class="inlineinfo saftybox" @click="pgchange('sft')">
-              <i class="fa fa-shield" style="margin-right: 5px;"></i><span>安全设置</span>
+              <i class="el-icon-price-tag" style="margin-right: 5px;"></i><span>安全设置</span>
             </div>
             <div class="inlineinfo saftybox" @click="pgchange('meg')">
-              <i class="fa fa-shield" style="margin-right: 5px;"></i><span>班级管理</span>
+              <i class="el-icon-collection" style="margin-right: 5px;"></i><span>班级管理</span>
             </div>
             <div class="inlineinfo saftybox" @click="pgchange('new')">
-              <i class="fa fa-shield" style="margin-right: 5px;"></i><span>申请新班级</span>
+              <i class="el-icon-set-up" style="margin-right: 5px;"></i><span>申请新班级</span>
             </div>
           </div>
-          <div class="messagebox">
-            消息通知
-          </div>
+          <!-- <div class="messagebox">消息通知</div> -->
           
           <!-- 更换头像 -->
           <div>
@@ -149,8 +150,10 @@ export default {
         this.$router.push({path: '/teahome/classlist'})
       }else if(targ=='meg') { //班级管理
         this.$router.push({path: '/teahome/meglist'})        
-      }else {
+      }else if(targ == 'new') {
         this.$router.push({path: '/teahome/addnew'})
+      }else {
+        this.pgchange('home')
       }
     },
     handlePreview(file) {

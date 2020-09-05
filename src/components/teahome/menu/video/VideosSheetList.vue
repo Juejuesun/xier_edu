@@ -3,8 +3,8 @@
     <div class="sheet-header" @click="toggleSheet">
       <i class="el-icon-arrow-right" ref="toggleicon"></i>
       <span class="sheet-header-span">
-        {{data_item.name}}
-        <span>({{data_item.num}})</span>
+        {{item.name}}
+        <span>({{item.num}})</span>
       </span>
       <span class="en-btn1">
         <el-button  type="info" v-show="tempInfo.isShowVideo" size="mini" @click.stop="rename('chap')">重命名</el-button>
@@ -15,24 +15,20 @@
     <div
       v-show="showSheets"
       class="sheet-content"
-      v-for="(i, index) in data_item.details"
+      v-for="(i, index) in item.details"
       :key="index"
        @click.stop="showSheetMenu(i)"
     >
-      <!-- <div class="sheet-content-image">
-        <img :src="i.details_image" width="50" height="50" style="padding: 5px;overflow: hidden" />
-      </div> -->
       <div class="sheet-content-iswatch">
         <i v-if="i.details_iswatch" class="el-icon-success" style="color: rgb(59,169,246)"></i>
         <i v-else class="el-icon-circle-check"></i>
       </div>
       <div class="sheet-content-middle">
         <p style>{{i.details_name}}</p>
-        <!-- <p style="margin-top: 10px;font-size: 14px;color: #666">{{i.details_num}}首歌曲</p> -->
       </div>
       <span class="en-btn2">
-        <el-button  type="info" v-show="tempInfo.isShow" size="mini" @click.stop="rename()">重命名</el-button>
-        <el-button  type="danger" v-show="tempInfo.isShow" size="mini" @click.stop="rename()" icon="el-icon-delete" circle></el-button>
+        <el-button  type="info" v-show="tempInfo.isShowVideo" size="mini" @click.stop="rename('class', i)">重命名</el-button>
+        <el-button  type="danger" v-show="tempInfo.isShowVideo" size="mini" @click.stop="removehw('class', i)" icon="el-icon-delete" circle></el-button>
       </span>
     </div>
     <!-- 对话框 -->
@@ -75,8 +71,9 @@ export default {
       EditVisible: false,
       renameForm: {
         newName: ''
-      }
-    };
+      },
+      tmp: {}
+    }
   },
    computed: {
     ...mapState([ 'accountInfo', 'tempInfo', 'videoList' ])
@@ -84,7 +81,7 @@ export default {
   methods: {
     //向右的小图标动画
     toggleSheet(index) {
-      console.log(this.$refs);
+      // console.log(this.$refs);
       this.$refs.toggleicon.style.transform = !this.showSheets
         ? "rotate(90deg)"
         : "rotate(0)";
@@ -106,10 +103,85 @@ export default {
       this.cancleadd()
       this.EditVisible = false
     },
-    reprename() {
-
+    async reprename() {
+      if(this.tmp.type === 'chap') {
+        const {data: res} = await this.$http.post('/tech/rename_fc', {fc_id: this.item.id, name: this.renameForm.newName})
+        console.log(res)
+        if(res.status == 200) {
+          this.item.name = this.renameForm.newName
+          await this.$store.dispatch('getVideoList')
+          this.$message({
+            message: res.message +'！',
+            type: "success",
+          });
+          this.EditVisible = false
+        }else {
+          this.$message({
+            message: res.message +'！',
+            type: 'error',
+          });
+        }
+      }else {
+        const {data: res} = await this.$http.post('/tech/rename_sc', {sc_id: this.tmp.row.details_id, name: this.renameForm.newName})
+        console.log(res)
+        if(res.status == 200) {
+          await this.$store.dispatch('getVideoList')
+          this.$message({
+            message: res.message +'！',
+            type: "success",
+          });
+          this.EditVisible = false
+        }else {
+          this.$message({
+            message: res.message +'！',
+            type: 'error',
+          });
+        }
+      }
     },
-    removehw() {}
+    rename(type, row) {
+      this.EditVisible = true
+      this.tmp.type = type
+      this.tmp.row = row
+      console.log(this.tmp)
+    },
+    async removehw(type, row) {
+      if(type === 'chap') {
+        const {data: res} = await this.$http.post('/tech/del_fc', {fc_id: this.item.id})
+        console.log(res)
+        if(res.status == 200) {
+          await this.$store.dispatch('getVideoList')
+          this.$message({
+            message: res.message +'！',
+            type: "success",
+          });
+          this.EditVisible = false
+        }else {
+          this.$message({
+            message: res.message +'！',
+            type: 'error',
+          });
+        }
+      }else {
+        console.log(this.item)
+        console.log(row)
+        const {data: res} = await this.$http.post('/tech/del_sc', {assignment_id: row.details_id})
+        console.log(res)
+        if(res.status == 200) {
+          await this.$store.dispatch('getVideoList')
+          this.$message({
+            message: res.message +'！',
+            type: "success",
+          });
+          this.EditVisible = false
+        }else {
+          this.$message({
+            message: res.message +'！',
+            type: 'error',
+          });
+        }
+      }
+    }
   },
   created() {
     this.data_item = this.item;

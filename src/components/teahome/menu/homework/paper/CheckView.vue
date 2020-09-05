@@ -4,6 +4,7 @@
       <span class="backbtn" @click="$router.back()">
         <i class="el-icon-back"></i>
       </span>
+      <span>{{tempInfo.oneHomework.details_name}}</span>
     </div>
     <el-divider></el-divider>
     <p>提交内容：</p>
@@ -42,14 +43,14 @@
             placeholder="请输入得分..."
           ></el-input>
         </el-form-item>
-        <el-form-item label="评语" prop="desc">
+        <!-- <el-form-item label="评语" prop="desc">
           <el-input
             type="textarea"
             v-model="homeworkResForm.desc"
             placeholder="请输入评语..."
             style="width: 80%"
           ></el-input>
-        </el-form-item>
+        </el-form-item> -->
         <el-form-item>
           <el-button type="primary" @click="submitForm('homeworkResForm')">提交</el-button>
           <el-button @click="resetForm()">重置</el-button>
@@ -78,30 +79,31 @@ export default {
       },
     };
   },
+   computed: {
+    ...mapState([ 'accountInfo', 'tempInfo', 'homeworkList', 'videoList' ])
+  },
   methods: {
     submitForm(formName) {
       this.$refs[formName].validate(async (valid) => {
         if (valid) {
           alert("submit!");
           let asc = {
-            studentId: this.$route.query.rowInfo.stuNum,
-            workId: this.$route.query.homeworkCon.workId,
+            finish_id: this.$route.query.rowInfo.id,
             score: this.homeworkResForm.point,
-            comment: this.homeworkResForm.desc,
           };
           let { data: res } = await this.$http.post(
-            "/teacher/correctWork",
+            "/tech/correct_work",
             asc
           );
-          if (res.status == "success") {
+          if (res.status == 200) {
             this.$message({
               message: "批改成功！",
               type: "success",
             });
-            this.$store.dispatch(
-              "detailList",
-              this.$route.query.homeworkCon.workId
-            );
+            // this.$store.dispatch(
+            //   "detailList",
+            //   this.$route.query.homeworkCon.workId
+            // );
             this.$router.back();
           } else {
             this.$message({
@@ -124,22 +126,23 @@ export default {
       this.$refs["homeworkResForm"].resetFields();
     },
     async getWorkContent() {
-      let asc = {
-        studentId: this.$route.query.rowInfo.stuNum,
-        workId: this.$route.query.homeworkCon.workId,
-      };
-      let { data: res } = await this.$http.post("/teacher/getSubContext", asc);
-      if (res) {
-        this.content = res.subContext;
-      }
+      // let asc = {
+      //   studentId: this.$route.query.rowInfo.stuNum,
+      //   workId: this.$route.query.homeworkCon.workId,
+      // };
+      // let { data: res } = await this.$http.post("/teacher/getSubContext", asc);
+      // if (res) {
+        this.content = this.$route.query.rowInfo.content
+      // }
     },
   },
   created() {
     this.getWorkContent();
-    if (this.$route.query.rowInfo.checkState === 1) {
-      this.homeworkResForm.point = this.$route.query.rowInfo.point;
-      this.homeworkResForm.desc = this.$route.query.rowInfo.comment;
-    }
+    // if (this.$route.query.rowInfo.checkState === 1) {
+    //   this.homeworkResForm.point = this.$route.query.rowInfo.point;
+    //   this.homeworkResForm.desc = this.$route.query.rowInfo.comment;
+    // }
+    this.$store.dispatch('getAtSubmit')
   },
 };
 </script>

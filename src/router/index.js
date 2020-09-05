@@ -33,6 +33,8 @@ import AddNewWork from '../components/teahome/menu/homework/AddNewWork'
 import AddNewVideo from '../components/teahome/menu/video/AddNewVideo'
 import Paper from '../components/teahome/menu/homework/paper/Paper'
 import CheckView from '../components/teahome/menu/homework/paper/CheckView'
+import PaperCheck from '../components/teahome/menu/homework/paper/PaperCheck'
+import HomeworkDetailTea from '../components/teahome/menu/homework/paper/HomeworkDetailTea';
 
 Vue.use(VueRouter)
 
@@ -203,6 +205,16 @@ const routes = [
         name: 'Paper',
         component: Paper,
         children: [
+          {
+            path: '/teaclass/homework/paper/detail',
+            name: 'HomeworkDetailTea',
+            component: HomeworkDetailTea
+          },
+          {
+            path: '/teaclass/homework/paper/check',
+            name: 'PaperCheck',
+            component: PaperCheck
+          },
           {
             path: '/teaclass/homework/paper/detail',
             name: 'CheckView',

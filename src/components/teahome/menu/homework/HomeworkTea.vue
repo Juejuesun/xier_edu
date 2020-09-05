@@ -25,7 +25,7 @@
       <el-select v-model="addnewchap.chapter" placeholder="章节选择">
         <el-option label="在最前加入" value="front"></el-option>
         <el-option
-          v-for="(item, index) in homeworkList"
+          v-for="(item, index) in videoList"
           :key="index"
           :label="'在第 ' + (index+1) + ' 章后加入'"
           :value="item.name"
@@ -62,7 +62,7 @@ export default {
     }
   },
   computed: {
-    ...mapState([ 'accountInfo', 'tempInfo', 'homeworkList' ])
+    ...mapState([ 'accountInfo', 'tempInfo', 'homeworkList', 'videoList' ])
   },
   methods: {
     addnewwork() {
