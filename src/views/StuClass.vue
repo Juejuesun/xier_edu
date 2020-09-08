@@ -6,18 +6,20 @@
       </div>
       <div class="asibtn">
         <div class="userh" @click="pgchange">
-          <i class="el-icon-user"></i>
+          <!-- <i class="el-icon-user"></i> -->
+          <el-avatar size="small" :src="accountInfo.avadar"><i class="el-icon-user"></i></el-avatar>
         </div>
-        <el-button size="small" type="info" round @click="logout">退出</el-button>
+        <!-- <el-button size="small" type="info" round @click="logout">退出</el-button> -->
+        <button class="button type2" @click="logout">退出</button>
       </div>
     </el-header>
     <el-main style=" padding: 0; margin: 0;">
-      <el-container style=" padding: 0; height: 100%;">
-        <el-aside width="250px" style="background: rgba(242,242,242); heignt: 100%;" class="boxs">
+      <el-container style=" padding: 0; height: calc(90vh);">
+        <el-aside width="260px" style="background: rgba(242,242,242); heignt: 100%;" class="boxs ">
           <div class="infobox">
             <el-image
               style="width: 100%; height: 150px;border-radius: 10px;"
-              src="https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg"
+              src="https://gitee.com/juejuesun/pic-tyo/raw/master/img/1583115478206.jpeg"
               fit="fit"
             ></el-image>
           </div>
@@ -45,7 +47,12 @@
 </template>
 
 <script>
+import { mapState } from "vuex"
+
 export default {
+  computed: {
+    ...mapState(["accountInfo"]),
+  },
   methods: {
     backbtn() {
       this.$router.push({ path: "/stuhome/classlist" });
@@ -123,7 +130,7 @@ export default {
   margin-top: 2px;
   padding-top: 10px;
   padding-bottom: 10px;
-
+  border-radius: 10px;
   display: flex;
   flex-direction: column;
   align-items: center;

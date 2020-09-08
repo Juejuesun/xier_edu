@@ -14,6 +14,7 @@
       class="sheet-content"
       v-for="(i, index) in data_item.details"
       :key="index"
+      @click="showSheetMenu(i)"
     >
       <!-- <div class="sheet-content-image">
         <img :src="i.details_image" width="50" height="50" style="padding: 5px;overflow: hidden" />

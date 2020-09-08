@@ -1,20 +1,29 @@
 <template>
   <el-container>
     <el-header class="header_box">
-      <div class="inpout">
-        <!-- <input class="inpbox" placeholder="请输入课程名称"/>
-        <div class="scbtn"><i class="el-icon-search"></i></div> -->
+      <div class="canvas canvas1">
+        <div class="spinner1 spinnerMax">
+          <div class="spinner1 spinnerMid">
+            <div class="spinner1 spinnerMin"></div>
+          </div>
+        </div>
       </div>
+      <!-- <div class="inpout">
+        <input class="inpbox" placeholder="请输入课程名称"/>
+        <div class="scbtn"><i class="el-icon-search"></i></div>
+      </div> -->
       <div class="asibtn">
         <div class="userh" @click="pgchange('home')">
-          <i class="el-icon-user"></i>
+          <!-- <i class="el-icon-user"></i> -->
+          <el-avatar size="small" :src="accountInfo.avadar"><i class="el-icon-user"></i></el-avatar>
         </div>
-        <el-button size="small" type="info" round @click="logout">退出</el-button>
+        <!-- <el-button size="small" type="info" round @click="logout">退出</el-button> -->
+        <button class="button type2" @click="logout">退出</button>
       </div>
     </el-header>
     <el-main style=" padding: 0; margin: 0">
-      <el-container style=" padding: 0;">
-        <el-aside width="250px">
+      <el-container style=" padding: 0; height: calc(90vh);">
+        <el-aside width="300px" class="asidesss">
           <div class="infobox">
             <el-avatar style="border: 1px solid #606266;" :size="80" :src="accountInfo.avadar" @click.native="dialogTableVisible=true">头像</el-avatar>
             <div class="inlineinfo">{{accountInfo.name}}</div>
@@ -328,28 +337,27 @@ export default {
   height: 30px;
   /* align-self: center; */
 }
-.header_box {
+/* .header_box {
   height: 50px;
   display: flex;
-  /* justify-content: space-around; */
   align-items: center;
   justify-content: flex-end;
   -moz-box-shadow:0px 1px 3px #ADADAD; -webkit-box-shadow:0px 1px 3px #ADADAD; box-shadow:0px 1px 3px #ADADAD;
-}
+} */
 
 /* asider */
 
-.infobox {
+/* .infobox {
   border: 1px solid #606266;
   border-radius: 20px;
   width: 90%;
-  /* height: 300px; */
   padding: 3%;
   padding-top: 10%;
   display: flex;
   flex-direction: column;
   align-items: center;
-}
+  margin: 10px;
+} */
 .inlineinfo {
   margin: 5px;
 }

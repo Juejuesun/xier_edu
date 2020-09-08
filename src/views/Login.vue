@@ -3,7 +3,7 @@
     <div class="headerbox">教育平台</div>
     <div class="mainbox">
       <div class="imgbox">
-        <el-image src="https://pic.downk.cc/item/5f24223a14195aa594afdaf8.jpg"></el-image>
+        <el-image style="border-radius: 20px" src="https://pic.downk.cc/item/5f24223a14195aa594afdaf8.jpg"></el-image>
       </div>
       <div class="login_box">
         <div class="angle">
@@ -181,7 +181,9 @@ export default {
 .imgbox {
   width: 50%;
   height: 350px;
-  margin: 20px;
+  margin: 30px;
+  margin-top: 50px;
+  filter: blur(3px); 
 }
 
 .mainbox {

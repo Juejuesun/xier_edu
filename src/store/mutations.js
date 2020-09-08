@@ -9,7 +9,8 @@ import {
   USER_SIGN_OUT,
   GET_STU_LIST,
   GET_MEG_CLASS_LIST,
-  GET_AT_SUBMIT
+  GET_AT_SUBMIT,
+  GET_NEW_WORK
 } from './mutation-types'
 
 import axios from 'axios'
@@ -106,5 +107,9 @@ export default{
     if(res.status == 200) {
       state.subedInfo = JSON.parse(JSON.stringify(res.data[0]))
     }
+  },
+  async [GET_NEW_WORK] (state) {
+    const {data: res} = await axios.post('/latest_courses_assigns', {class_id: state.tempInfo.class_id})
+    console.log(res)
   }
 }

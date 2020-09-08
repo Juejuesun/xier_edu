@@ -10,17 +10,17 @@
       </div>
     </el-main>
   <el-aside width="200px">
-    <!-- <div class="asiders">
+    <div class="asiders">
       <div class="asidebox">最新更新</div>
       <p style="color: #909399;">课程</p>
       <div>
-        <el-link type="primary">课程列表</el-link>
+        <el-link class="linklist" type="primary" v-for="(item, index) in videoList" :key="index">{{item.name}}</el-link>
       </div>
       <p style="color: #909399;">作业</p>
       <div>
-        <el-link type="primary">作业列表</el-link>
+        <el-link class="linklist" type="primary" v-for="(item, index) in homeworkList" :key="index">{{item.name}}</el-link>
       </div>
-    </div> -->
+    </div>
   </el-aside>
   </el-container>
 </template>
@@ -35,12 +35,14 @@ export default {
     }
   },
   computed: {
-    ...mapState([ 'accountInfo', 'anceList', 'tempInfo' ])
+    ...mapState([ 'accountInfo', 'anceList', 'tempInfo', 'videoList', 'homeworkList' ])
   },
   created() {
     // this.$store.dispatch('getNotices', this.classId)
     this.$store.dispatch('getAnce')
-
+    this.$store.dispatch('getNewWork')
+    this.$store.dispatch('getHomeworkList')
+    this.$store.dispatch('getVideoList')
   }
 }
 </script>
@@ -57,10 +59,21 @@ export default {
 }
 .asiders {
   margin: 0;
-  padding: 0;
+  /* padding: 5px; */
   background: rgba(242,242,242);
   padding: 10px;
   margin-top: 30%;
   border-radius: 10px;
+  
+}
+.linklist {
+  overflow: hidden;    
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  display: -webkit-box;    
+  -webkit-box-orient: vertical;    
+  -webkit-line-clamp: 3;    
+  overflow: hidden;
+  margin-bottom: 5px;
 }
 </style>

@@ -14,6 +14,7 @@
       class="sheet-content"
       v-for="(i, index) in data_item.details"
       :key="index"
+      @click="showSheetMenu(i)"
     >
       <!-- <div class="sheet-content-image">
         <img :src="i.details_image" width="50" height="50" style="padding: 5px;overflow: hidden" />
@@ -26,7 +27,7 @@
         <p style>{{i.details_name}}</p>
         <!-- <p style="margin-top: 10px;font-size: 14px;color: #666">{{i.details_num}}首歌曲</p> -->
       </div>
-      <i class="el-icon-more sheet-content-i" @click="showSheetMenu(i)"></i>
+      <i class="el-icon-more sheet-content-i" @click.stop="showSheetMenu(i)"></i>
     </div>
   </div>
 </template>
@@ -48,7 +49,7 @@ export default {
   methods: {
     //向右的小图标动画
     toggleSheet(index) {
-      console.log(this.$refs);
+      // console.log(this.$refs);
       this.$refs.toggleicon.style.transform = !this.showSheets
         ? "rotate(90deg)"
         : "rotate(0)";

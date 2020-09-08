@@ -1,22 +1,31 @@
 <template>
   <el-container>
     <el-header class="header_box">
-      <div class="inpout">
-        <!-- <input class="inpbox" placeholder="请输入课程名称" />
+      <div class="canvas canvas1">
+        <div class="spinner1 spinnerMax">
+          <div class="spinner1 spinnerMid">
+            <div class="spinner1 spinnerMin"></div>
+          </div>
+        </div>
+      </div>
+      <!-- <div class="inpout">
+        <input class="inpbox" placeholder="请输入课程名称" />
         <div class="scbtn">
           <i class="el-icon-search"></i>
-        </div> -->
-      </div>
+        </div>
+      </div> -->
       <div class="asibtn">
         <div class="userh" @click="pgchange('home')">
-          <i class="el-icon-user"></i>
+          <!-- <i class="el-icon-user"></i> -->
+          <el-avatar size="small" :src="accountInfo.avadar"><i class="el-icon-user"></i></el-avatar>
         </div>
-        <el-button size="small" type="info" round @click="logout">退出</el-button>
+        <!-- <el-button size="small" type="info" round @click="logout">退出</el-button> -->
+        <button class="button type2" @click="logout">退出</button>
       </div>
     </el-header>
-    <el-main style=" padding: 0; margin: 0">
-      <el-container style=" padding: 0;">
-        <el-aside width="250px">
+    <el-main style=" padding: 0; margin: 0;">
+      <el-container style=" padding: 0; height: calc(90vh);">
+        <el-aside width="300px" class="asidesss">
           <div class="infobox">
             <el-avatar
               style="border: 1px solid #606266;"
@@ -346,30 +355,29 @@ export default {
   height: 30px;
   /* align-self: center; */
 }
-.header_box {
+/* .header_box {
   height: 50px;
   display: flex;
-  /* justify-content: space-around; */
   align-items: center;
-  justify-content: flex-end;
-  -moz-box-shadow: 0px 1px 3px #adadad;
-  -webkit-box-shadow: 0px 1px 3px #adadad;
-  box-shadow: 0px 1px 3px #adadad;
-}
+  justify-content: space-between;
+  -moz-box-shadow: 0px 1px 1px #adadad;
+  -webkit-box-shadow: 0px 1px 1px #adadad;
+  box-shadow: 0px 1px 1px #adadad;
+} */
 
 /* asider */
 
-.infobox {
+/* .infobox {
   border: 1px solid #606266;
   border-radius: 20px;
   width: 90%;
-  /* height: 300px; */
   padding: 3%;
   padding-top: 10%;
   display: flex;
   flex-direction: column;
   align-items: center;
-}
+  background-color: #fff;
+} */
 .inlineinfo {
   margin: 10px;
 }

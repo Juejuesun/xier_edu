@@ -9,3 +9,4 @@ export const USER_SIGN_OUT = 'user_sign_out'  //退出登陆
 export const GET_STU_LIST = 'get_stu_list'  //获取学生列表
 export const GET_MEG_CLASS_LIST = 'getMegClassList'  //获取班级管理列表
 export const GET_AT_SUBMIT = 'get_at_submit'  // 获取已交列表
+export const GET_NEW_WORK = 'get_new_work'  //获取最新的课程和作业，最多返回三条接口

@@ -9,7 +9,8 @@ import {
   USER_SIGN_OUT,
   GET_STU_LIST,
   GET_MEG_CLASS_LIST,
-  GET_AT_SUBMIT
+  GET_AT_SUBMIT,
+  GET_NEW_WORK
 } from './mutation-types'
 
 export default{
@@ -45,5 +46,8 @@ export default{
   },
   getAtSubmit({commit}) {
     commit(GET_AT_SUBMIT)
+  },
+  getNewWork({commit}) {
+    commit(GET_NEW_WORK)
   }
 }
