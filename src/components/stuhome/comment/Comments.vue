@@ -7,7 +7,7 @@
       </div>
     </div>
     <el-divider></el-divider>
-    <el-card class="box-card" shadow="hover">
+    <el-card class="box_card" shadow="hover">
       <div class="header_title">{{tempInfo.oneTalking.title}}</div>
       <div>{{tempInfo.oneTalking.content}}</div>
       <div class="card_btm">

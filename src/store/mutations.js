@@ -81,7 +81,8 @@ export default{
   async [USER_SIGN_OUT] (state) {
     const {data: res} = await axios.post('/auth/logout', {user_id: state.accountInfo.user_id})
     console.log(res)
-    
+    window.sessionStorage.clear()
+    state = {}
   },
   async [GET_STU_LIST] (state) {
     let asc = {

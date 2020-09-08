@@ -6,7 +6,7 @@
     </div>
     <el-divider></el-divider>
     <div v-for="(item, index) in talkingList" :key="index">
-      <el-card class="box-card" shadow="hover">
+      <el-card class="box_card" shadow="hover">
         <div class="header_title">{{item.title}}</div>
         <div>{{item.content}}</div>
         <div class="card_btm">

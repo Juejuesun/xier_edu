@@ -1,5 +1,5 @@
 <template>
-    <el-card class="box-card" shadow="never" :body-style="{padding: '0px', margin: '0px' }">
+    <el-card class="box_card" shadow="never" :body-style="{padding: '0px', margin: '0px' }">
       <div v-show="isShow">
         <div class="inputposition">
             <div class="Wrapper">
@@ -236,7 +236,7 @@ export default {
 </script>
 
 <style scoped>
-.box-card {
+.box_card {
     width: 100%;
     height: 300px;
     border: snow;
