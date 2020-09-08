@@ -2,7 +2,7 @@
   <div>
     <div class="list" >
       <el-card class="box-card" shadow="hover" v-for="(item, index) in classList" :key="index">
-        <el-image style="width: 100%; height: 150px" src="https://gitee.com/juejuesun/pic-tyo/raw/master/img/1583115478206.jpeg" fit="fit"></el-image>
+        <el-image style="width: 100%; height: 150px; border-radius: 15px;" src="https://gitee.com/juejuesun/pic-tyo/raw/master/img/1583115478206.jpeg" fit="fit"></el-image>
         <h3>{{item.subName}}</h3>
         <p>主讲教师：<span>{{item.teacher}}</span></p>
         <p>班级：一年2班</p>
@@ -42,6 +42,7 @@ export default {
 .box-card {
   width: 30%;
   margin: 1%;
+  -moz-box-shadow:0px 0px 11px #505259; -webkit-box-shadow:0px 0px 11px #505259; box-shadow:0px 0px 11px #505259;
 }
 .list {
   display: flex;
