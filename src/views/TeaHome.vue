@@ -17,8 +17,20 @@
           <!-- <i class="el-icon-user"></i> -->
           <el-avatar size="small" :src="accountInfo.avadar"><i class="el-icon-user"></i></el-avatar>
         </div>
-        <!-- <el-button size="small" type="info" round @click="logout">退出</el-button> -->
-        <button class="button type2" @click="logout">退出</button>
+        <el-popover
+          placement="bottom"
+          width="80"
+          trigger="hover"
+          >
+          <div>
+            <div class="btnhead"  @click="pgchange('grs')">个人中心</div>
+            <div class="btnhead"  @click="pgchange('sft')">安全设置</div>
+            <div class="btnhead"  @click="pgchange('meg')">班级管理</div>
+            <div class="btnhead"  @click="pgchange('new')">申请新班级</div>
+          </div>
+          <button class="button type2" slot="reference" @click="logout">退出</button>
+        </el-popover>
+        <!-- <button class="button type2" @click="logout">退出</button> -->
       </div>
     </el-header>
     <el-main style=" padding: 0; margin: 0">
@@ -369,7 +381,10 @@ export default {
   cursor: pointer;
 }
 .saftybox:hover{
-  background-color: #C0C4CC;
+  /* background-color: #C0C4CC; */
+  background-color: #16a085;
+  color: #f5f5f5
+
 }
 
 .messagebox {

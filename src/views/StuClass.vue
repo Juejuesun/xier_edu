@@ -5,12 +5,23 @@
         <i class="el-icon-arrow-left"></i> 返回
       </div>
       <div class="asibtn">
-        <div class="userh" @click="pgchange">
+        <div class="userh" @click="pgchange('grs')">
           <!-- <i class="el-icon-user"></i> -->
           <el-avatar size="small" :src="accountInfo.avadar"><i class="el-icon-user"></i></el-avatar>
         </div>
         <!-- <el-button size="small" type="info" round @click="logout">退出</el-button> -->
-        <button class="button type2" @click="logout">退出</button>
+        <!-- <button class="button type2" @click="logout">退出</button> -->
+        <el-popover
+        placement="bottom"
+        width="80"
+        trigger="hover"
+        >
+        <div>
+          <div class="btnhead"  @click="pgchange('grs')">个人中心</div>
+          <div class="btnhead"  @click="pgchange('sft')">安全设置</div>
+        </div>
+        <button class="button type2" slot="reference" @click="logout">退出</button>
+      </el-popover>
       </div>
     </el-header>
     <el-main style=" padding: 0; margin: 0;">
@@ -57,8 +68,17 @@ export default {
     backbtn() {
       this.$router.push({ path: "/stuhome/classlist" });
     },
-    pgchange() {
-      this.$router.push({path: '/stuhome/classlist'})
+    // pgchange() {
+    //   this.$router.push({path: '/stuhome/classlist'})
+    // },
+    pgchange(targ) {
+      if (targ == "sft") {
+        this.$router.push({ path: "/stuhome/saftypg" });
+      }else if(targ == 'grs') {
+        this.pgchange('home')
+      }else {
+        this.$router.push({ path: "/stuhome/classlist" });
+      }
     },
     logout() {
       this.$store.dispatch('userSignOut')
